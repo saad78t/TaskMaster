@@ -1,13 +1,13 @@
 import Button from "./Button";
 import styles from "./styles";
 
-function SortingItems({ clearList, sortBy, setSortBy }) {
+function SortingItems({ clearList, sortBy, dispatch }) {
   return (
     <section style={styles.controls}>
       <select
         style={styles.select}
         value={sortBy}
-        onChange={(e) => setSortBy(e.target.value)}
+        onChange={(e) => dispatch({ type: "sort", payload: e.target.value })}
       >
         <option value="input">sort by input order</option>
         <option value="note">sort by notes</option>

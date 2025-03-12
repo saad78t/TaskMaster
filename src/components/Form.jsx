@@ -1,18 +1,60 @@
-import { useState } from "react";
+/*
+Why Not Check in the Reducer?
+1. Reducers should be pure functions and shouldn't 
+   include conditions that prevent state updates
+   based on input validation.
+2. Input validation should be done before dispatching
+   an action (in handleSubmit).
+3. If you add this check inside reducer,
+   every action type would need validation,
+   making the code harder to maintain.
+*/
+
+import { useReducer } from "react";
 import styles from "./styles";
 import SelectComponent from "./SelectComponent";
 import Button from "./Button";
 
+const initialState = {
+  note: "",
+  times1: 1,
+  times2: 1,
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "add/note":
+      return {
+        ...state,
+        note: action.payload,
+      };
+    case "add/times1":
+      return {
+        ...state,
+        times1: action.payload,
+      };
+    case "add/times2":
+      return {
+        ...state,
+        times2: action.payload,
+      };
+    case "reset":
+      return { ...initialState };
+    default:
+      throw new Error("SOMETHING WENT WRONG");
+  }
+}
+
 function Form({ onAddItem }) {
-  const [note, setNote] = useState("");
-  // const [times, setTimes] = useState(1);
-  const [times1, setTimes1] = useState(1);
-  const [times2, setTimes2] = useState(1);
+  const [{ note, times1, times2 }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (!note) return;
+    if (!note.trim()) return;
 
     const newItem = {
       note,
@@ -23,9 +65,8 @@ function Form({ onAddItem }) {
     };
     onAddItem(newItem);
 
-    setNote("");
-    setTimes1(1);
-    setTimes2(1);
+    // Dispatch a reset action instead of returning initialState
+    dispatch({ type: "reset" });
   }
 
   return (
@@ -33,18 +74,24 @@ function Form({ onAddItem }) {
       <form style={styles.form} onSubmit={handleSubmit}>
         <SelectComponent
           value={times1}
-          onChange={(e) => setTimes1(e.target.value)}
+          onChange={(e) =>
+            dispatch({ type: "add/times1", payload: e.target.value })
+          }
         />
         <SelectComponent
           value={times2}
-          onChange={(e) => setTimes2(e.target.value)}
+          onChange={(e) =>
+            dispatch({ type: "add/times2", payload: e.target.value })
+          }
         />
 
         <input
           type="text"
           style={styles.input}
           value={note}
-          onChange={(e) => setNote(e.target.value)}
+          onChange={(e) =>
+            dispatch({ type: "add/note", payload: e.target.value })
+          }
           placeholder="enter a notification"
         />
 

@@ -1,0 +1,47 @@
+In React's useReducer hook, dispatch is a function that 
+sends (or dispatches) an action to the reducer function 
+to update the state.
+
+Think of dispatch as a trigger that tells React 
+how to update the state based on the action type.
+
+How dispatch Works
+When you call dispatch({ type: "action_name", payload: data }), React will:
+
+Pass the action to the reducer function.
+The reducer will process the action based on the type.
+It will return a new state (React will not modify the old state directly).
+React re-renders the component with the updated state.
+
+import React, { useReducer } from "react";
+
+const initialState = { count: 0 };
+
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "increment":
+      return { count: state.count + 1 };
+    case "decrement":
+      return { count: state.count - 1 };
+    case "reset":
+      return initialState;
+    default:
+      throw new Error("Unknown action type");
+  }
+}
+
+function Counter() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  return (
+    <div>
+      <h2>Count: {state.count}</h2>
+      <button onClick={() => dispatch({ type: "increment" })}>+</button>
+      <button onClick={() => dispatch({ type: "decrement" })}>-</button>
+      <button onClick={() => dispatch({ type: "reset" })}>Reset</button>
+    </div>
+  );
+}
+
+export default Counter;

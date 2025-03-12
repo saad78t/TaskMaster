@@ -1,7 +1,7 @@
 import styles from "./styles";
 
 function Footer({ items }) {
-  if (!items.length)
+  if (!items?.length)
     return (
       <p style={styles.footer}>Start adding tasks to your daily schedule.</p>
     );
