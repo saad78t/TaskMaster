@@ -1,9 +1,6 @@
-import { useContext } from "react";
-import styles from "./styles";
-import { TasksContext } from "../TasksProvider";
+import styles from "../styles";
 
-function Footer() {
-  const { items } = useContext(TasksContext);
+function Footer({ items }) {
   if (!items?.length)
     return (
       <p style={styles.footer}>Start adding tasks to your daily schedule.</p>

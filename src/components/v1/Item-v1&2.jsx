@@ -1,10 +1,8 @@
-import { useContext, useState } from "react";
-import styles from "./styles";
-import { TasksContext } from "../TasksProvider";
+import { useState } from "react";
+import styles from "../styles";
 
-function Item({ item }) {
+function Item({ item, onDeleteItem, onToggleItem }) {
   const [hover, setHover] = useState();
-  const { onDeleteItem, onToggleItem } = useContext(TasksContext);
   return (
     <div style={styles.item}>
       <li style={styles.listItem}>

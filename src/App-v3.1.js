@@ -1,9 +1,9 @@
-import { useReducer } from "react";
-import Header from "./components/v2/Header-v2";
-import Form from "./components/v2/Form-v2";
-import Items from "./components/v1/Items-V1&V2";
-import Footer from "./components/v1/Footerv1-v2";
-import SortingItems from "./components/v2/SortingItems-v2";
+import { createContext, useReducer } from "react";
+import Header from "./components/v3.1/Header-v3.1";
+import Form from "./components/v3.1/Formv3.1";
+import Items from "./components/v3.1/Items-v3.1";
+import Footer from "./components/v3.1/Footer-v3.1";
+import SortingItems from "./components/v3.1/SortingItems-v3.1";
 import styles from "./components/styles";
 
 const initialState = { items: [], sortBy: "input" };
@@ -42,12 +42,13 @@ function reducer(state, action) {
   }
 }
 
+export const TasksContext = createContext();
+
 function App() {
   const [{ items, sortBy }, dispatch] = useReducer(reducer, initialState);
 
   // Extract version from file name (e.g., "App-v2.js" → "v2")
   const version = import.meta.url.match(/App-(v\d+)/)?.[1] || "Unknown";
-
   let sortedItems;
   if (sortBy === "input") sortedItems = items;
   if (sortBy === "note")
@@ -74,25 +75,29 @@ function App() {
   }
 
   return (
-    <div style={styles.container}>
-      <Header version={version} />
-      <section style={styles.formContainer}>
-        <SortingItems
-          sortBy={sortBy}
-          dispatch={dispatch}
-          clearList={clearList}
-        />
-
-        <Form onAddItem={handleAddItem} />
-      </section>
-      {/* <Form onAddItem={handleAddItem} times2={times2} setTimes2={setTimes2} /> */}
-      <Items
-        sortedItems={sortedItems}
-        onDeleteItem={handleDelete}
-        onToggleItem={handleToggleItem}
-      />
-      <Footer items={items} />
-    </div>
+    <TasksContext.Provider
+      value={{
+        version,
+        sortBy,
+        sortedItems,
+        items,
+        dispatch,
+        clearList,
+        onAddItem: handleAddItem,
+        onDeleteItem: handleDelete,
+        onToggleItem: handleToggleItem,
+      }}
+    >
+      <div style={styles.container}>
+        <Header />
+        <section style={styles.formContainer}>
+          <SortingItems />
+          <Form />
+        </section>
+        <Items />
+        <Footer />
+      </div>
+    </TasksContext.Provider>
   );
 }
 

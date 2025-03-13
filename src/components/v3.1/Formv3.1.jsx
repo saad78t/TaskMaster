@@ -11,10 +11,10 @@ Why Not Check in the Reducer?
 */
 
 import { useContext, useReducer } from "react";
-import styles from "./styles";
-import SelectComponent from "./SelectComponent";
-import Button from "./Button";
-import { TasksContext } from "../TasksProvider";
+import styles from "../styles";
+import SelectComponent from "../SelectComponent";
+import Button from "../Button";
+import { TasksContext } from "../../App-v3.1";
 
 const initialState = {
   note: "",

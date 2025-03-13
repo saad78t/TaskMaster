@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
-import styles from "./styles";
-import { TasksContext } from "../TasksProvider";
+import styles from "../styles";
+import { TasksContext } from "../../App-v3.1";
 
 function Item({ item }) {
   const [hover, setHover] = useState();

@@ -10,11 +10,10 @@ Why Not Check in the Reducer?
    making the code harder to maintain.
 */
 
-import { useContext, useReducer } from "react";
-import styles from "./styles";
-import SelectComponent from "./SelectComponent";
-import Button from "./Button";
-import { TasksContext } from "../TasksProvider";
+import { useReducer } from "react";
+import styles from "../styles";
+import SelectComponent from "../SelectComponent";
+import Button from "../Button";
 
 const initialState = {
   note: "",
@@ -46,12 +45,11 @@ function reducer(state, action) {
   }
 }
 
-function Form() {
+function Form({ onAddItem }) {
   const [{ note, times1, times2 }, dispatch] = useReducer(
     reducer,
     initialState
   );
-  const { onAddItem } = useContext(TasksContext);
 
   function handleSubmit(e) {
     e.preventDefault();

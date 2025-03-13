@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Header from "./components/Header";
-import Form from "./components/Form";
-import Items from "./components/Items";
-import Footer from "./components/Footer";
-import SortingItems from "./components/SortingItems";
+import Header from "./components/v1/Header-v1&2";
+import Form from "./components/v1/Form-v1";
+import Items from "./components/v1/Items-V1&V2";
+import Footer from "./components/v1/Footerv1-v2";
+import SortingItems from "./components/v1/SortingItems-v1";
 import styles from "./components/styles";
 
 function App() {

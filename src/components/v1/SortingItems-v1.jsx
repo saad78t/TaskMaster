@@ -1,16 +1,13 @@
-import { useContext } from "react";
-import Button from "./Button";
-import styles from "./styles";
-import { TasksContext } from "../TasksProvider";
+import Button from "../Button";
+import styles from "../styles";
 
-function SortingItems() {
-  const { clearList, sortBy, dispatch } = useContext(TasksContext);
+function SortingItems({ clearList, sortBy, setSortBy }) {
   return (
     <section style={styles.controls}>
       <select
         style={styles.select}
         value={sortBy}
-        onChange={(e) => dispatch({ type: "sort", payload: e.target.value })}
+        onChange={(e) => setSortBy(e.target.value)}
       >
         <option value="input">sort by input order</option>
         <option value="note">sort by notes</option>

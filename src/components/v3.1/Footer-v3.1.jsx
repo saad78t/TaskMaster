@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import styles from "./styles";
-import { TasksContext } from "../TasksProvider";
+import styles from "../styles";
+import { TasksContext } from "../../App-v3.1";
 
 function Footer() {
   const { items } = useContext(TasksContext);

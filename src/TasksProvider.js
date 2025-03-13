@@ -1,10 +1,6 @@
-import { useReducer } from "react";
-import Header from "./components/Header";
-import Form from "./components/Form";
-import Items from "./components/Items";
-import Footer from "./components/Footer";
-import SortingItems from "./components/SortingItems";
-import styles from "./components/styles";
+import { createContext, useReducer } from "react";
+
+const TasksContext = createContext();
 
 const initialState = { items: [], sortBy: "input" };
 
@@ -42,11 +38,12 @@ function reducer(state, action) {
   }
 }
 
-function App() {
+function TasksProvider({ children }) {
   const [{ items, sortBy }, dispatch] = useReducer(reducer, initialState);
 
   // Extract version from file name (e.g., "App-v2.js" → "v2")
-  const version = import.meta.url.match(/App-(v\d+)/)?.[1] || "Unknown";
+  // const version = import.meta.url.match(/App-(v\d+)/)?.[1] || "Unknown";
+  const version = "v3.2";
 
   let sortedItems;
   if (sortBy === "input") sortedItems = items;
@@ -74,26 +71,22 @@ function App() {
   }
 
   return (
-    <div style={styles.container}>
-      <Header version={version} />
-      <section style={styles.formContainer}>
-        <SortingItems
-          sortBy={sortBy}
-          dispatch={dispatch}
-          clearList={clearList}
-        />
-
-        <Form onAddItem={handleAddItem} />
-      </section>
-      {/* <Form onAddItem={handleAddItem} times2={times2} setTimes2={setTimes2} /> */}
-      <Items
-        sortedItems={sortedItems}
-        onDeleteItem={handleDelete}
-        onToggleItem={handleToggleItem}
-      />
-      <Footer items={items} />
-    </div>
+    <TasksContext.Provider
+      value={{
+        version: version,
+        sortBy,
+        sortedItems,
+        items,
+        dispatch,
+        clearList,
+        onAddItem: handleAddItem,
+        onDeleteItem: handleDelete,
+        onToggleItem: handleToggleItem,
+      }}
+    >
+      {children}
+    </TasksContext.Provider>
   );
 }
 
-export default App;
+export { TasksProvider, TasksContext };

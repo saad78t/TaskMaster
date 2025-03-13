@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import Button from "./Button";
-import styles from "./styles";
-import { TasksContext } from "../TasksProvider";
+import Button from "../Button";
+import styles from "../styles";
+import { TasksContext } from "../../App-v3.1";
 
 function SortingItems() {
   const { clearList, sortBy, dispatch } = useContext(TasksContext);

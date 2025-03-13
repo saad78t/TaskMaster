@@ -1,7 +1,7 @@
 import { useState } from "react";
-import styles from "./styles";
-import SelectComponent from "./SelectComponent";
-import Button from "./Button";
+import styles from "../styles";
+import SelectComponent from "../SelectComponent";
+import Button from "../Button";
 
 function Form({ onAddItem }) {
   const [note, setNote] = useState("");

@@ -1,10 +1,7 @@
-import { useContext } from "react";
-import Button from "./Button";
-import styles from "./styles";
-import { TasksContext } from "../TasksProvider";
+import Button from "../Button";
+import styles from "../styles";
 
-function SortingItems() {
-  const { clearList, sortBy, dispatch } = useContext(TasksContext);
+function SortingItems({ clearList, sortBy, dispatch }) {
   return (
     <section style={styles.controls}>
       <select
