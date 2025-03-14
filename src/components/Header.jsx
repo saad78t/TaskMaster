@@ -1,9 +1,8 @@
-import { useContext } from "react";
 import styles from "./styles";
-import { TasksContext } from "../TasksProvider";
+import { useTasks } from "../TasksProvider";
 
 function Header() {
-  const { version } = useContext(TasksContext);
+  const { version } = useTasks();
 
   // let version = "Unknown";
   // if (document.currentScript?.src.includes("App-v1")) version = "v1";

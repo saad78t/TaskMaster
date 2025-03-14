@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 
 const TasksContext = createContext();
 
@@ -89,4 +89,11 @@ function TasksProvider({ children }) {
   );
 }
 
-export { TasksProvider, TasksContext };
+function useTasks() {
+  const context = useContext(TasksContext);
+  if (context === undefined)
+    throw new Error("TasksContext was used out of the TasksProvider");
+  return context;
+}
+
+export { TasksProvider, useTasks };

@@ -1,10 +1,9 @@
-import { useContext } from "react";
 import Item from "./Item";
 import styles from "./styles";
-import { TasksContext } from "../TasksProvider";
+import { useTasks } from "../TasksProvider";
 
 function Items() {
-  const { sortedItems } = useContext(TasksContext);
+  const { sortedItems } = useTasks();
 
   return (
     <section style={styles.itemsContainer}>
