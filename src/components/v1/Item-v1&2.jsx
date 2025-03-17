@@ -31,7 +31,6 @@ function Item({ item, onDeleteItem, onToggleItem, onEditItem }) {
           <span>{item.times2}</span>
         </div>
         <span style={styles.note}>{item.note}</span>
-        <button onClick={() => handleEdit()}>✏️</button>
 
         {accepted ? (
           <>
@@ -43,7 +42,9 @@ function Item({ item, onDeleteItem, onToggleItem, onEditItem }) {
               onChange={(e) => setNewNote(e.target.value)}
             />
           </>
-        ) : null}
+        ) : (
+          <button onClick={() => handleEdit()}>✏️</button>
+        )}
 
         <input
           style={styles.checkbox}
