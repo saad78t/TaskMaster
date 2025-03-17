@@ -47,6 +47,12 @@ function App() {
     if (confirmed) setItems([]);
   }
 
+  function handleEditItem(id, newNote) {
+    setItems((items) =>
+      items.map((item) => (item.id === id ? { ...item, note: newNote } : item))
+    );
+  }
+
   return (
     <div style={styles.container}>
       <Header version={version} />
@@ -64,6 +70,7 @@ function App() {
         sortedItems={sortedItems}
         onDeleteItem={handleDelete}
         onToggleItem={handleToggleItem}
+        onEditItem={handleEditItem}
       />
       <Footer items={items} />
     </div>

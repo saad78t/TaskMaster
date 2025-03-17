@@ -36,6 +36,18 @@ function reducer(state, action) {
         !window.confirm("Are you sure you want to delete all items?")
         ? state // If no items or user cancels, return the current state
         : { ...initialState }; // Reset state if confirmed
+    case "edit/item":
+      return {
+        ...state,
+        items: state.items.map((item) =>
+          item.id === action.payload.id
+            ? {
+                ...item,
+                note: action.payload.newNote,
+              }
+            : item
+        ),
+      };
 
     default:
       throw new Error("SOMETHING WENT WRONG");
@@ -73,6 +85,10 @@ function App() {
     dispatch({ type: "clear" });
   }
 
+  function handleEditItem(id, newNote) {
+    dispatch({ type: "edit/item", payload: { id, newNote } });
+  }
+
   return (
     <div style={styles.container}>
       <Header version={version} />
@@ -90,6 +106,7 @@ function App() {
         sortedItems={sortedItems}
         onDeleteItem={handleDelete}
         onToggleItem={handleToggleItem}
+        onEditItem={handleEditItem}
       />
       <Footer items={items} />
     </div>

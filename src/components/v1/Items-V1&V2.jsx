@@ -16,7 +16,7 @@ import styles from "../styles";
 //   { id: 7, times: 11, note: "test the seventh note", completed: false },
 // ];
 
-function Items({ sortedItems, onDeleteItem, onToggleItem }) {
+function Items({ sortedItems, onDeleteItem, onToggleItem, onEditItem }) {
   return (
     <section style={styles.itemsContainer}>
       <ul>
@@ -26,6 +26,7 @@ function Items({ sortedItems, onDeleteItem, onToggleItem }) {
             onDeleteItem={onDeleteItem}
             key={i}
             onToggleItem={onToggleItem}
+            onEditItem={onEditItem}
           />
         ))}
       </ul>
