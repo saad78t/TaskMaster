@@ -1,8 +1,15 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 
 const TasksContext = createContext();
 
-const initialState = { items: [], sortBy: "input" };
+// const initialState = { items: [], sortBy: "input" };
+
+function getInitialState() {
+  const savedItems = localStorage.getItem("itemsV3.2");
+  return savedItems
+    ? { items: JSON.parse(savedItems), sortBy: "input" }
+    : { items: [], sortBy: "input" };
+}
 
 function reducer(state, action) {
   switch (action.type) {
@@ -31,7 +38,7 @@ function reducer(state, action) {
       return !state.items.length ||
         !window.confirm("Are you sure you want to delete all items?")
         ? state // If no items or user cancels, return the current state
-        : { ...initialState }; // Reset state if confirmed
+        : { items: [], sortBy: "input" }; // Reset state if confirmed
     case "edit/item":
       return {
         ...state,
@@ -47,8 +54,18 @@ function reducer(state, action) {
 }
 
 function TasksProvider({ children }) {
-  const [{ items, sortBy }, dispatch] = useReducer(reducer, initialState);
+  const [{ items, sortBy }, dispatch] = useReducer(
+    reducer,
+    null,
+    getInitialState
+  );
 
+  useEffect(
+    function () {
+      localStorage.setItem("itemsV3.2", JSON.stringify(items));
+    },
+    [items]
+  );
   // Extract version from file name (e.g., "App-v2.js" → "v2")
   // const version = import.meta.url.match(/App-(v\d+)/)?.[1] || "Unknown";
   const version = "v3.2";

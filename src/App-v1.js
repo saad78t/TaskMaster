@@ -9,7 +9,7 @@ import styles from "./components/styles";
 function App() {
   const [items, setItems] = useState(() => {
     // Try to retrieve data from localStorage when the page loads
-    const savedItems = localStorage.getItem("items");
+    const savedItems = localStorage.getItem("itemsV1");
     return savedItems ? JSON.parse(savedItems) : [];
   });
   const [sortBy, setSortBy] = useState("input");
@@ -28,7 +28,7 @@ function App() {
 
   useEffect(
     function () {
-      localStorage.setItem("items", JSON.stringify(items));
+      localStorage.setItem("itemsV1", JSON.stringify(items));
     },
     [items]
   );
