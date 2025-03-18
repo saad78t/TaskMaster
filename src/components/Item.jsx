@@ -4,7 +4,24 @@ import { useTasks } from "../TasksProvider";
 
 function Item({ item }) {
   const [hover, setHover] = useState();
-  const { onDeleteItem, onToggleItem } = useTasks();
+  const [newNote, setNewNote] = useState(item.note);
+  const [editing, setEditing] = useState(false);
+  const { onDeleteItem, onToggleItem, editItem } = useTasks();
+
+  function handleEdit() {
+    setEditing(true);
+  }
+
+  function handleSave() {
+    editItem(item.id, newNote);
+    setEditing(false);
+  }
+
+  function discardChanges() {
+    setNewNote(item.note);
+    setEditing(false);
+  }
+
   return (
     <div style={styles.item}>
       <li style={styles.listItem}>
@@ -13,6 +30,21 @@ function Item({ item }) {
           <span>{item.times2}</span>
         </div>
         <span style={styles.note}>{item.note}</span>
+
+        {editing ? (
+          <>
+            <input
+              type="text"
+              value={newNote}
+              onChange={(e) => setNewNote(e.target.value)}
+            />
+            <button onClick={() => handleSave()}>💾</button>
+            <button onClick={() => discardChanges()}>❌</button>
+          </>
+        ) : (
+          <button onClick={() => handleEdit()}>✏️</button>
+        )}
+
         <input
           style={styles.checkbox}
           type="checkbox"

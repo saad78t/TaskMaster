@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./components/v1/Header-v1&2";
 import Form from "./components/v1/Form-v1";
 import Items from "./components/v1/Items-V1&V2";
@@ -7,7 +7,11 @@ import SortingItems from "./components/v1/SortingItems-v1";
 import styles from "./components/styles";
 
 function App() {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(() => {
+    // محاولة استعادة البيانات من localStorage عند تحميل الصفحة
+    const savedItems = localStorage.getItem("items");
+    return savedItems ? JSON.parse(savedItems) : [];
+  });
   const [sortBy, setSortBy] = useState("input");
 
   // Extract version from file name (e.g., "App-v2.js" → "v2")
@@ -21,6 +25,13 @@ function App() {
     sortedItems = items
       .slice()
       .sort((a, b) => a.completed * 1 - Number(b.completed) * 1);
+
+  useEffect(
+    function () {
+      localStorage.setItem("items", JSON.stringify(items));
+    },
+    [items]
+  );
 
   function handleAddItem(item) {
     setItems((items) => [...items, item]);

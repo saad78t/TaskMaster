@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "../styles";
 
 function Item({ item, onDeleteItem, onToggleItem, onEditItem }) {
-  const [hover, setHover] = useState();
+  const [hover, setHover] = useState(false);
   const [newNote, setNewNote] = useState(item.note);
   const [accepted, setAccepted] = useState(false);
 

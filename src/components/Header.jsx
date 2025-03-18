@@ -12,7 +12,7 @@ function Header() {
     <div style={styles.header}>
       <p>
         📔TaskMaster {version} using a separate file of useContext & useReducer
-        hooks📝
+        hook which is TasksProvider.js📝
       </p>
     </div>
   );

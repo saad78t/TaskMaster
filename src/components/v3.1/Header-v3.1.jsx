@@ -11,7 +11,7 @@ function Header() {
   return (
     <div style={styles.header}>
       <p>
-        📔TaskMaster {version}.1 using useContext & useReducer Hooks in the
+        📔TaskMaster {version}.1 using useContext & useReducer Hook in the
         App-v3.1.js file📝
       </p>
     </div>
