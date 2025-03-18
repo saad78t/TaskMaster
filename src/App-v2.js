@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import Header from "./components/v2/Header-v2";
 import Form from "./components/v2/Form-v2";
 import Items from "./components/v1/Items-V1&V2";
@@ -6,7 +6,14 @@ import Footer from "./components/v1/Footerv1-v2";
 import SortingItems from "./components/v2/SortingItems-v2";
 import styles from "./components/styles";
 
-const initialState = { items: [], sortBy: "input" };
+// const initialState = { items: [], sortBy: "input" };
+
+function getInitialState() {
+  const savedItems = localStorage.getItem("itemsV2");
+  return savedItems
+    ? { items: JSON.parse(savedItems), sortBy: "input" }
+    : { items: [], sortBy: "input" };
+}
 
 function reducer(state, action) {
   switch (action.type) {
@@ -35,7 +42,7 @@ function reducer(state, action) {
       return !state.items.length ||
         !window.confirm("Are you sure you want to delete all items?")
         ? state // If no items or user cancels, return the current state
-        : { ...initialState }; // Reset state if confirmed
+        : { items: [], sortBy: "input" }; // Reset state if confirmed
     case "edit/item":
       return {
         ...state,
@@ -55,7 +62,18 @@ function reducer(state, action) {
 }
 
 function App() {
-  const [{ items, sortBy }, dispatch] = useReducer(reducer, initialState);
+  const [{ items, sortBy }, dispatch] = useReducer(
+    reducer,
+    null,
+    getInitialState
+  );
+
+  useEffect(
+    function () {
+      localStorage.setItem("itemsV2", JSON.stringify(items));
+    },
+    [items]
+  );
 
   // Extract version from file name (e.g., "App-v2.js" → "v2")
   const version = import.meta.url.match(/App-(v\d+)/)?.[1] || "Unknown";

@@ -8,7 +8,7 @@ import styles from "./components/styles";
 
 function App() {
   const [items, setItems] = useState(() => {
-    // محاولة استعادة البيانات من localStorage عند تحميل الصفحة
+    // Try to retrieve data from localStorage when the page loads
     const savedItems = localStorage.getItem("items");
     return savedItems ? JSON.parse(savedItems) : [];
   });
