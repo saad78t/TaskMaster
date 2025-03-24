@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import Header from "./components/v1/Header-v1&2";
 import Form from "./components/v1/Form-v1";
 import Items from "./components/v1/Items-V1&V2";
@@ -13,6 +14,51 @@ function App() {
     return savedItems ? JSON.parse(savedItems) : [];
   });
   const [sortBy, setSortBy] = useState("input");
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  //Retrieve data from URL (with error protection)
+  useEffect(() => {
+    const tasksFromUrl = searchParams.get("tasks");
+
+    if (tasksFromUrl) {
+      try {
+        const decodedData = decodeURIComponent(tasksFromUrl);
+        console.log("📥 Data retrieved from the link:", decodedData);
+
+        // Check if the data is in JSON format or just text
+        if (!decodedData.startsWith("[") || !decodedData.endsWith("]")) {
+          console.warn("⚠️ The returned data is not valid JSON:", decodedData);
+          return;
+        }
+
+        const parsedItems = JSON.parse(decodedData);
+        if (Array.isArray(parsedItems)) {
+          setItems(parsedItems);
+        } else {
+          console.error(
+            "⚠️ The returned data is not a valid array:",
+            parsedItems
+          );
+        }
+      } catch (error) {
+        console.error("❌ Error parsing data from URL:", error);
+      }
+    }
+  }, [searchParams]);
+
+  //Update the data in the link correctly
+  useEffect(() => {
+    const newParams = new URLSearchParams();
+
+    if (items.length > 0) {
+      const encodedData = encodeURIComponent(JSON.stringify(items));
+      newParams.set("tasks", encodedData);
+    } else {
+      newParams.delete("tasks"); // Delete key when list is empty
+    }
+
+    setSearchParams(newParams);
+  }, [items, setSearchParams]);
 
   // Extract version from file name (e.g., "App-v2.js" → "v2")
   const version = import.meta.url.match(/App-(v\d+)/)?.[1] || "Unknown";

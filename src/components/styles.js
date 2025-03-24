@@ -47,7 +47,7 @@ const styles = {
     textTransform: "uppercase",
     flex: "1",
     padding: "10px",
-    width: "60px",
+    width: "69px",
     fontSize: "16px",
     borderRadius: "5px",
     border: "1px solid #aaa",

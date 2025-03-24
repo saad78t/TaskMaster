@@ -32,11 +32,17 @@ function Form({ onAddItem }) {
       <form style={styles.form} onSubmit={handleSubmit}>
         <SelectComponent
           value={times1}
-          onChange={(e) => setTimes1(e.target.value)}
+          key="times1"
+          onChange={(e) => {
+            setTimes1(Number(e.target.value));
+          }}
         />
         <SelectComponent
           value={times2}
-          onChange={(e) => setTimes2(e.target.value)}
+          key="times2"
+          onChange={(e) => {
+            setTimes2(Number(e.target.value));
+          }}
         />
 
         <input
