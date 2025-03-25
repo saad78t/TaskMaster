@@ -97,13 +97,13 @@ function App() {
 
   useEffect(() => {
     if (!items || items.length === 0) {
-      setSearchParams({}); // ← **مسح القيم إذا لم تكن هناك عناصر**
+      setSearchParams({}); // ← **Clear values ​​if there are no elements**
       return;
     }
 
     const encodedData = encodeURIComponent(JSON.stringify(items));
-    setSearchParams({ tasks: encodedData }); // ← **تحديث الـ URL مباشرة**
-  }, [items, setSearchParams]); // **تم ضبط dependencies**
+    setSearchParams({ tasks: encodedData }); // ← **Update URL directly**
+  }, [items, setSearchParams]);
 
   useEffect(
     function () {
