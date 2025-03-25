@@ -1,0 +1,60 @@
+useEffect(
+    function () {
+      const newParams = new URLSearchParams(searchParams); // ← **يتم إنشاء نسخة جديدة من searchParams**
+
+      if (items.length > 0) {
+        const encodedData = encodeURIComponent(JSON.stringify(items));
+        newParams.set("tasks", encodedData);
+      } else {
+        newParams.delete("tasks");
+      }
+
+      setSearchParams(newParams); // ← **تحديث الـ URL بالنسخة الجديدة**
+    },
+    [items, searchParams, setSearchParams] // ← **تمت إضافة searchParams هنا**
+);
+
+لماذا كانت هذه الطريقة منطقية؟
+newParams هو نسخة جديدة من searchParams التي تم استخراجها من useSearchParams().
+
+يتم تعديل newParams ثم إعادة تعيينها باستخدام setSearchParams(newParams).
+
+كان الهدف هو تحديث معلمات البحث (URL params) فقط عند الحاجة.
+
+❌ لماذا تم تغييرها؟
+searchParams لا يحتاج إلى أن يكون في الـ dependencies، لأنه يُقرأ فقط في هذا الـ useEffect وليس له تأثير مباشر.
+
+newParams هو كائن جديد في كل مرة يتم استدعاء useEffect، ولكن استخدام setSearchParams({ tasks: encodedData }) مباشرةً يبسط الكود.
+
+الطريقة الثانية أكثر كفاءة ولا تحتاج إلى إنشاء نسخة جديدة (newParams) من searchParams يدويًا.
+
+2. الطريقة الثانية (الحل النهائي)
+
+useEffect(() => {
+    if (!items || items.length === 0) {
+      setSearchParams({}); // ← **مسح القيم إذا لم تكن هناك عناصر**
+      return;
+    }
+
+    const encodedData = encodeURIComponent(JSON.stringify(items));
+    setSearchParams({ tasks: encodedData }); // ← **تحديث الـ URL مباشرة**
+}, [items, setSearchParams]); // **تم ضبط dependencies**
+
+
+ لماذا هذا الحل هو الأفضل؟
+أبسط وأوضح:
+
+لا حاجة لإنشاء newParams يدويًا.
+
+نستخدم setSearchParams({ tasks: encodedData }) مباشرةً، مما يجعل الكود أكثر كفاءة.
+
+أداء أفضل:
+
+تقليل عدد الكائنات التي يتم إنشاؤها.
+
+لا يتم إعادة تنفيذ useEffect بشكل غير ضروري بسبب وجود searchParams في الـ dependencies.
+
+تصرف أكثر وضوحًا عند عدم وجود عناصر:
+
+إذا كانت items فارغة، يقوم setSearchParams({}) بحذف الـ tasks من الـ URL بدلًا من تركها بقيمة فارغة.
+

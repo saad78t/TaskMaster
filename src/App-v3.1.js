@@ -5,6 +5,7 @@ import Items from "./components/v3.1/Items-v3.1";
 import Footer from "./components/v3.1/Footer-v3.1";
 import SortingItems from "./components/v3.1/SortingItems-v3.1";
 import styles from "./components/styles";
+import { useSearchParams } from "react-router-dom";
 
 // const initialState = { items: [], sortBy: "input" };
 
@@ -17,6 +18,8 @@ function getInitialState() {
 
 function reducer(state, action) {
   switch (action.type) {
+    case "set/items":
+      return { ...state, items: action.payload };
     case "add/item":
       return { ...state, items: [...state.items, action.payload] };
     case "sort":
@@ -53,7 +56,8 @@ function reducer(state, action) {
         ),
       };
     default:
-      throw new Error("SOMETHING WENT WRONG");
+      // throw new Error("SOMETHING WENT WRONG");
+      return state;
   }
 }
 
@@ -65,6 +69,41 @@ function App() {
     null,
     getInitialState
   );
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(
+    function () {
+      const tasksFromUrl = searchParams.get("tasks");
+      if (!tasksFromUrl) return;
+
+      try {
+        const decodedData = decodeURIComponent(tasksFromUrl);
+        const parsedItems = JSON.parse(decodedData);
+        if (Array.isArray(parsedItems)) {
+          dispatch({ type: "set/items", payload: parsedItems });
+        } else {
+          console.error(
+            "⚠️ The returned data is not a valid array:",
+            parsedItems
+          );
+        }
+      } catch (e) {
+        console.error("❌ Error parsing data from URL: ", e);
+      }
+    },
+    [searchParams]
+  );
+
+  useEffect(() => {
+    if (!items || items.length === 0) {
+      setSearchParams({}); // ← **مسح القيم إذا لم تكن هناك عناصر**
+      return;
+    }
+
+    const encodedData = encodeURIComponent(JSON.stringify(items));
+    setSearchParams({ tasks: encodedData }); // ← **تحديث الـ URL مباشرة**
+  }, [items, setSearchParams]); // **تم ضبط dependencies**
 
   useEffect(
     function () {
