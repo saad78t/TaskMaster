@@ -5,6 +5,7 @@ import Items from "./components/v1/Items-V1&V2";
 import Footer from "./components/v1/Footerv1-v2";
 import SortingItems from "./components/v2/SortingItems-v2";
 import styles from "./components/styles";
+import { useSearchParams } from "react-router-dom";
 
 // const initialState = { items: [], sortBy: "input" };
 
@@ -16,7 +17,10 @@ function getInitialState() {
 }
 
 function reducer(state, action) {
+  console.log("Reducer received action:", action);
   switch (action.type) {
+    case "set/items":
+      return { ...state, items: action.payload };
     case "add/item":
       return { ...state, items: [...state.items, action.payload] };
     case "sort":
@@ -57,7 +61,8 @@ function reducer(state, action) {
       };
 
     default:
-      throw new Error("SOMETHING WENT WRONG");
+      console.error(`Unknown action type: ${action.type}`, action);
+      return state;
   }
 }
 
@@ -67,6 +72,49 @@ function App() {
     null,
     getInitialState
   );
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  //Retrieve data from URL (with error protection)
+  useEffect(() => {
+    const tasksFromUrl = searchParams.get("tasks");
+
+    if (tasksFromUrl) {
+      try {
+        const decodedData = decodeURIComponent(tasksFromUrl);
+        console.log("📥 Data retrieved from the link:", decodedData);
+
+        const parsedItems = JSON.parse(decodedData);
+
+        if (Array.isArray(parsedItems)) {
+          dispatch({ type: "set/items", payload: parsedItems });
+        } else {
+          console.error(
+            "⚠️ The returned data is not a valid array:",
+            parsedItems
+          );
+        }
+      } catch (error) {
+        console.error("❌ Error parsing data from URL:", error);
+      }
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    const newParams = new URLSearchParams();
+
+    if (items.length > 0) {
+      const encodedData = encodeURIComponent(JSON.stringify(items));
+      newParams.set("tasks", encodedData);
+    } else {
+      newParams.delete("tasks");
+    }
+
+    setSearchParams(newParams);
+  }, [items, setSearchParams]);
+
+  useEffect(() => {
+    console.log("Updated items:", items);
+  }, [items]);
 
   useEffect(
     function () {
