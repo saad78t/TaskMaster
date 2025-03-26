@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const TasksContext = createContext();
 
@@ -13,6 +14,8 @@ function getInitialState() {
 
 function reducer(state, action) {
   switch (action.type) {
+    case "set/items":
+      return { ...state, items: action.payload };
     case "add/item":
       return { ...state, items: [...state.items, action.payload] };
     case "sort":
@@ -58,6 +61,44 @@ function TasksProvider({ children }) {
     reducer,
     null,
     getInitialState
+  );
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(
+    function () {
+      const tasksFromUrl = searchParams.get("tasks");
+      if (!tasksFromUrl) return;
+      try {
+        const decodedData = decodeURIComponent(tasksFromUrl);
+        const parsedItems = JSON.parse(decodedData);
+        console.log(parsedItems);
+        if (Array.isArray(parsedItems)) {
+          dispatch({ type: "set/items", payload: parsedItems });
+        } else {
+          console.error(
+            "⚠️ The returned data is not a valid array:",
+            parsedItems
+          );
+        }
+      } catch (e) {
+        console.error("❌ Error parsing data from URL: ", e);
+      }
+    },
+    [searchParams]
+  );
+
+  useEffect(
+    function () {
+      if (!items || items.length === 0) {
+        setSearchParams({});
+        return;
+      }
+
+      const endocdeData = encodeURIComponent(JSON.stringify(items));
+      setSearchParams({ tasks: endocdeData });
+    },
+    [items, setSearchParams]
   );
 
   useEffect(
