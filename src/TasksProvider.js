@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { useSearchParams } from "react-router-dom";
+import LZString from "lz-string";
 
 const TasksContext = createContext();
 
@@ -65,48 +66,47 @@ function TasksProvider({ children }) {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  useEffect(
-    function () {
-      const tasksFromUrl = searchParams.get("tasks");
-      if (!tasksFromUrl) return;
-      try {
-        const decodedData = decodeURIComponent(tasksFromUrl);
-        const parsedItems = JSON.parse(decodedData);
-        console.log(parsedItems);
-        if (Array.isArray(parsedItems)) {
-          dispatch({ type: "set/items", payload: parsedItems });
-        } else {
-          console.error(
-            "⚠️ The returned data is not a valid array:",
-            parsedItems
-          );
-        }
-      } catch (e) {
-        console.error("❌ Error parsing data from URL: ", e);
+  // ✅ When the page loads, retrieve the compressed data from the `URL` and parse it
+  useEffect(() => {
+    const compressedTasks = searchParams.get("tasks");
+    if (!compressedTasks) return;
+
+    try {
+      const decodedData =
+        LZString.decompressFromEncodedURIComponent(compressedTasks); // 🔹 فك الضغط
+      const parsedItems = JSON.parse(decodedData);
+      if (Array.isArray(parsedItems)) {
+        dispatch({ type: "set/items", payload: parsedItems });
+      } else {
+        console.error("⚠️ البيانات غير صحيحة:", parsedItems);
       }
-    },
-    [searchParams]
-  );
+    } catch (e) {
+      console.error("❌ خطأ في تحليل البيانات من الرابط:", e);
+    }
+  }, []);
 
-  useEffect(
-    function () {
-      if (!items || items.length === 0) {
-        setSearchParams({});
-        return;
-      }
-
-      const endocdeData = encodeURIComponent(JSON.stringify(items));
-      setSearchParams({ tasks: endocdeData });
-    },
-    [items, setSearchParams]
-  );
-
-  useEffect(
-    function () {
+  // ✅ Save tasks to `localStorage`
+  useEffect(() => {
+    if (items.length > 0) {
       localStorage.setItem("itemsV3.2", JSON.stringify(items));
-    },
-    [items]
-  );
+    } else {
+      localStorage.removeItem("itemsV3.2");
+    }
+  }, [items]);
+
+  // ✅ Compress data before adding it to the `URL`
+  useEffect(() => {
+    if (items.length === 0) {
+      setSearchParams({});
+      return;
+    }
+
+    const compressedData = LZString.compressToEncodedURIComponent(
+      JSON.stringify(items)
+    ); // 🔹 Data compression
+    setSearchParams({ tasks: compressedData }); // 🔹 Store it compressed in a `URL`
+  }, [items, setSearchParams]);
+
   // Extract version from file name (e.g., "App-v2.js" → "v2")
   // const version = import.meta.url.match(/App-(v\d+)/)?.[1] || "Unknown";
   const version = "v3.2";
