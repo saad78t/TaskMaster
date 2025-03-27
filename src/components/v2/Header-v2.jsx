@@ -8,7 +8,7 @@ function Header({ version, darkMode, toggleDarkMode }) {
   return (
     <header style={styles(darkMode).header}>
       <span style={styles(darkMode).headerText}>
-        📔TaskMaster {version} using useState Hook📝
+        📔TaskMaster {version} using useReducer Hook📝
       </span>
       <button style={styles(darkMode).toggleButton} onClick={toggleDarkMode}>
         {darkMode ? "☀ Light Mode" : "🌙 Dark Mode"}
