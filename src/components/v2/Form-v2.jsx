@@ -45,7 +45,7 @@ function reducer(state, action) {
   }
 }
 
-function Form({ onAddItem }) {
+function Form({ onAddItem, darkMode }) {
   const [{ note, times1, times2 }, dispatch] = useReducer(
     reducer,
     initialState
@@ -71,23 +71,26 @@ function Form({ onAddItem }) {
 
   return (
     <section>
-      <form style={styles.form} onSubmit={handleSubmit}>
+      <form style={styles(darkMode).form} onSubmit={handleSubmit}>
         <SelectComponent
           value={times1}
+          darkMode={darkMode}
           onChange={(e) =>
-            dispatch({ type: "add/times1", payload: e.target.value })
+            dispatch({ type: "add/times1", payload: Number(e.target.value) })
           }
         />
         <SelectComponent
           value={times2}
+          darkMode={darkMode}
           onChange={(e) =>
-            dispatch({ type: "add/times2", payload: e.target.value })
+            dispatch({ type: "add/times2", payload: Number(e.target.value) })
           }
         />
 
         <input
           type="text"
-          style={styles.input}
+          className={darkMode ? "dark-mode-placeholder" : ""}
+          style={styles(darkMode).input}
           value={note}
           onChange={(e) =>
             dispatch({ type: "add/note", payload: e.target.value })

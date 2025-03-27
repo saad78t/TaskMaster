@@ -11,14 +11,24 @@ import { useSearchParams } from "react-router-dom";
 
 function getInitialState() {
   const savedItems = localStorage.getItem("itemsV2");
-  return savedItems
-    ? { items: JSON.parse(savedItems), sortBy: "input" }
-    : { items: [], sortBy: "input" };
+  const savedDarkMode = localStorage.getItem("darkMode");
+
+  return {
+    darkMode: savedDarkMode ? JSON.parse(savedDarkMode) : false,
+    items: savedItems ? JSON.parse(savedItems) : [],
+    sortBy: "input",
+  };
+  // const savedItems = localStorage.getItem("itemsV2");
+  // return savedItems
+  //   ? { items: JSON.parse(savedItems), sortBy: "input" }
+  //   : { items: [], sortBy: "input" };
 }
 
 function reducer(state, action) {
   console.log("Reducer received action:", action);
   switch (action.type) {
+    case "dark/mode":
+      return { ...state, darkMode: !state.darkMode };
     case "set/items":
       return { ...state, items: action.payload };
     case "add/item":
@@ -46,7 +56,7 @@ function reducer(state, action) {
       return !state.items.length ||
         !window.confirm("Are you sure you want to delete all items?")
         ? state // If no items or user cancels, return the current state
-        : { items: [], sortBy: "input" }; // Reset state if confirmed
+        : { items: [], sortBy: "input", darkMode: state.darkMode }; // Reset state if confirmed
     case "edit/item":
       return {
         ...state,
@@ -67,7 +77,7 @@ function reducer(state, action) {
 }
 
 function App() {
-  const [{ items, sortBy }, dispatch] = useReducer(
+  const [{ items, sortBy, darkMode }, dispatch] = useReducer(
     reducer,
     null,
     getInitialState
@@ -99,14 +109,24 @@ function App() {
     }
   }, [searchParams]);
 
+  useEffect(
+    function () {
+      localStorage.setItem("darkMode", JSON.stringify(darkMode ?? false));
+    },
+    [darkMode]
+  );
+
   useEffect(() => {
     const newParams = new URLSearchParams();
-
-    if (items.length > 0) {
-      const encodedData = encodeURIComponent(JSON.stringify(items));
-      newParams.set("tasks", encodedData);
-    } else {
-      newParams.delete("tasks");
+    try {
+      if (items?.length > 0) {
+        const encodedData = encodeURIComponent(JSON.stringify(items));
+        newParams.set("tasks", encodedData);
+      } else {
+        newParams.delete("tasks");
+      }
+    } catch (e) {
+      console.log("error", e);
     }
 
     setSearchParams(newParams);
@@ -155,26 +175,36 @@ function App() {
     dispatch({ type: "edit/item", payload: { id, newNote } });
   }
 
+  function toggleDarkMode() {
+    dispatch({ type: "dark/mode" });
+  }
+
   return (
-    <div style={styles.container}>
-      <Header version={version} />
-      <section style={styles.formContainer}>
+    <div style={styles(darkMode).container}>
+      <Header
+        version={version}
+        darkMode={darkMode}
+        toggleDarkMode={toggleDarkMode}
+      />
+      <section style={styles(darkMode).formContainer}>
         <SortingItems
           sortBy={sortBy}
+          darkMode={darkMode}
           dispatch={dispatch}
           clearList={clearList}
         />
 
-        <Form onAddItem={handleAddItem} />
+        <Form onAddItem={handleAddItem} darkMode={darkMode} />
       </section>
       {/* <Form onAddItem={handleAddItem} times2={times2} setTimes2={setTimes2} /> */}
       <Items
         sortedItems={sortedItems}
+        darkMode={darkMode}
         onDeleteItem={handleDelete}
         onToggleItem={handleToggleItem}
         onEditItem={handleEditItem}
       />
-      <Footer items={items} />
+      <Footer items={items} darkMode={darkMode} />
     </div>
   );
 }

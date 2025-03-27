@@ -1,11 +1,11 @@
 import Button from "../Button";
 import styles from "../styles";
 
-function SortingItems({ clearList, sortBy, dispatch }) {
+function SortingItems({ clearList, sortBy, dispatch, darkMode }) {
   return (
-    <section style={styles.controls}>
+    <section style={styles(darkMode).controls}>
       <select
-        style={styles.select}
+        style={styles(darkMode).select}
         value={sortBy}
         onChange={(e) => dispatch({ type: "sort", payload: e.target.value })}
       >
