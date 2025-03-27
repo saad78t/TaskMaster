@@ -16,9 +16,15 @@ import styles from "../styles";
 //   { id: 7, times: 11, note: "test the seventh note", completed: false },
 // ];
 
-function Items({ sortedItems, onDeleteItem, onToggleItem, onEditItem }) {
+function Items({
+  sortedItems,
+  onDeleteItem,
+  onToggleItem,
+  onEditItem,
+  darkMode,
+}) {
   return (
-    <section style={styles.itemsContainer}>
+    <section style={styles(darkMode).itemsContainer}>
       <ul>
         {sortedItems?.map((item, i) => (
           <Item
@@ -27,6 +33,7 @@ function Items({ sortedItems, onDeleteItem, onToggleItem, onEditItem }) {
             key={i}
             onToggleItem={onToggleItem}
             onEditItem={onEditItem}
+            darkMode={darkMode}
           />
         ))}
       </ul>

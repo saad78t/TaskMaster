@@ -15,6 +15,15 @@ function App() {
   });
   const [sortBy, setSortBy] = useState("input");
   const [searchParams, setSearchParams] = useSearchParams();
+  // استرجاع حالة الدارك مود من localStorage عند تحميل التطبيق
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("darkMode") === "true"; // تحويل النص إلى boolean
+  });
+
+  // حفظ حالة الدارك مود في localStorage عند تغييره
+  useEffect(() => {
+    localStorage.setItem("darkMode", darkMode);
+  }, [darkMode]);
 
   //Retrieve data from URL (with error protection)
   useEffect(() => {
@@ -111,16 +120,21 @@ function App() {
   }
 
   return (
-    <div style={styles.container}>
-      <Header version={version} />
-      <section style={styles.formContainer}>
+    <div style={styles(darkMode).container}>
+      <Header
+        version={version}
+        darkMode={darkMode}
+        toggleDarkMode={() => setDarkMode((darkMode) => !darkMode)}
+      />
+      <section style={styles(darkMode).formContainer}>
         <SortingItems
           sortBy={sortBy}
           setSortBy={setSortBy}
           clearList={clearList}
+          darkMode={darkMode}
         />
 
-        <Form onAddItem={handleAddItem} />
+        <Form onAddItem={handleAddItem} darkMode={darkMode} />
       </section>
       {/* <Form onAddItem={handleAddItem} times2={times2} setTimes2={setTimes2} /> */}
       <Items
@@ -128,8 +142,9 @@ function App() {
         onDeleteItem={handleDelete}
         onToggleItem={handleToggleItem}
         onEditItem={handleEditItem}
+        darkMode={darkMode}
       />
-      <Footer items={items} />
+      <Footer items={items} darkMode={darkMode} />
     </div>
   );
 }

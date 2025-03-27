@@ -1,9 +1,11 @@
 import styles from "../styles";
 
-function Footer({ items }) {
+function Footer({ items, darkMode }) {
   if (!items?.length)
     return (
-      <p style={styles.footer}>Start adding tasks to your daily schedule.</p>
+      <p style={styles(darkMode).footer}>
+        Start adding tasks to your daily schedule.
+      </p>
     );
 
   const itemsNum = items.length;
@@ -19,7 +21,7 @@ function Footer({ items }) {
   // const itemsCompleted = items.filter(item=> item.completed).length
 
   return (
-    <div style={styles.footer}>
+    <div style={styles(darkMode).footer}>
       <p>
         {percentage === 100
           ? "you have completed your tasks"

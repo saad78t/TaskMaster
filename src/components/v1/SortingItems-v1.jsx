@@ -1,11 +1,11 @@
 import Button from "../Button";
 import styles from "../styles";
 
-function SortingItems({ clearList, sortBy, setSortBy }) {
+function SortingItems({ clearList, sortBy, setSortBy, darkMode }) {
   return (
-    <section style={styles.controls}>
+    <section style={styles(darkMode).controls}>
       <select
-        style={styles.select}
+        style={styles(darkMode).select}
         value={sortBy}
         onChange={(e) => setSortBy(e.target.value)}
       >

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./styles";
 
-function Button({ children, type, onClick }) {
+function Button({ children, type, onClick, darkMode }) {
   const [isHovered, setIsHovered] = useState(false);
 
   if (type === "add")
@@ -9,8 +9,11 @@ function Button({ children, type, onClick }) {
       <button
         style={
           isHovered
-            ? { ...styles.submitButton, ...styles.submitButtonHover }
-            : styles.submitButton
+            ? {
+                ...styles(darkMode).submitButton,
+                ...styles(darkMode).submitButtonHover,
+              }
+            : styles(darkMode).submitButton
         }
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -24,8 +27,11 @@ function Button({ children, type, onClick }) {
       <button
         style={
           isHovered
-            ? { ...styles.clearButton, ...styles.clearButtonHover }
-            : styles.clearButton
+            ? {
+                ...styles(darkMode).clearButton,
+                ...styles(darkMode).clearButtonHover,
+              }
+            : styles(darkMode).clearButton
         }
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "../styles";
 
-function Item({ item, onDeleteItem, onToggleItem, onEditItem }) {
+function Item({ item, onDeleteItem, onToggleItem, onEditItem, darkMode }) {
   const [hover, setHover] = useState(false);
   const [newNote, setNewNote] = useState(item.note);
   const [accepted, setAccepted] = useState(false);
@@ -24,18 +24,30 @@ function Item({ item, onDeleteItem, onToggleItem, onEditItem }) {
   }
 
   return (
-    <div style={styles.item}>
-      <li style={styles.listItem}>
-        <div style={styles.times}>
-          <span>{item.times1}</span>
-          <span>{item.times2}</span>
+    <div style={styles(darkMode).item}>
+      <li style={styles(darkMode).listItem}>
+        <div>
+          <div style={styles(darkMode).times}>
+            <span>{item.times1}</span>
+            <span>{item.times2}</span>
+          </div>
         </div>
-        <span style={styles.note}>{item.note}</span>
+        <span style={styles(darkMode).note}>{item.note}</span>
 
         {accepted ? (
           <>
-            <button onClick={() => editName()}>💾</button>
-            <button onClick={() => cancelChanges()}>❌</button>
+            <button
+              style={styles(darkMode).transparentButton}
+              onClick={() => editName()}
+            >
+              💾
+            </button>
+            <button
+              style={styles(darkMode).transparentButton}
+              onClick={() => cancelChanges()}
+            >
+              ❌
+            </button>
             <input
               type="text"
               value={newNote}
@@ -43,27 +55,36 @@ function Item({ item, onDeleteItem, onToggleItem, onEditItem }) {
             />
           </>
         ) : (
-          <button onClick={() => handleEdit()}>✏️</button>
+          <div style={styles(darkMode).actionsContainer}>
+            <button
+              style={styles(darkMode).transparentButton}
+              onClick={() => handleEdit()}
+            >
+              ✏️
+            </button>
+            <input
+              style={styles(darkMode).checkbox}
+              type="checkbox"
+              checked={item.completed}
+              onChange={() => onToggleItem(item.id)}
+            />
+            <button
+              onClick={() => onDeleteItem(item.id)}
+              style={
+                hover
+                  ? {
+                      ...styles(darkMode).deleteButton,
+                      ...styles(darkMode).deleteButtonHover,
+                    }
+                  : styles(darkMode).deleteButton
+              }
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+            >
+              &times;
+            </button>
+          </div>
         )}
-
-        <input
-          style={styles.checkbox}
-          type="checkbox"
-          checked={item.completed}
-          onChange={() => onToggleItem(item.id)}
-        />
-        <button
-          onClick={() => onDeleteItem(item.id)}
-          style={
-            hover
-              ? { ...styles.closeButton, ...styles.closeButtonHover }
-              : styles.closeButton
-          }
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
-        >
-          &times;
-        </button>
       </li>
     </div>
   );
