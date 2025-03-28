@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "../styles";
-import SelectComponent from "../v2/SelectComponent-v2";
+import SelectComponent from "../v2/SelectComponent-v1&2";
 import Button from "../Button";
 
 function Form({ onAddItem, darkMode }) {
