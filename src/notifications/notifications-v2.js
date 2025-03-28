@@ -54,3 +54,69 @@ const [{ items, sortBy }, dispatch] = useReducer(reducer, null, getInitialState)
 💡 null يجعل useReducer يتجاهل initialState ويستخدم initializer function فقط عند تحميل التطبيق.
 🔥 هذا يضمن استعادة البيانات من localStorage عند بدء التشغيل، دون التأثير على الأداء لاحقًا.
 🚀 أفضل ممارسة عند الحاجة إلى جلب البيانات المخزنة ديناميكيًا! */
+
+/*
+اشرح هذا السطر 
+localStorage.setItem("darkMode", JSON.stringify(darkMode ?? false));
+
+
+
+هذا السطر يقوم بحفظ قيمة darkMode في localStorage، مع التأكد من أنها ليست undefined، وإذا كانت undefined، يتم تعيينها إلى false بدلاً من ذلك.
+
+تحليل الكود خطوة بخطوة
+
+localStorage.setItem("darkMode", JSON.stringify(darkMode ?? false));
+darkMode ?? false
+
+?? هو "nullish coalescing operator"، ويُستخدم لإرجاع القيمة اليمنى (false) فقط إذا كانت القيمة اليسرى (darkMode) null أو undefined.
+
+هذا يعني:
+
+إذا كان darkMode true → سيبقى true
+
+إذا كان darkMode false → سيبقى false
+
+إذا كان darkMode undefined أو null → سيتم استخدام false بدلاً منه.
+
+JSON.stringify(...)
+
+يحول القيمة إلى نص (string) حتى يتمكن localStorage من تخزينها.
+
+لأن localStorage يخزن البيانات كنصوص فقط، نحتاج إلى تحويل true أو false إلى "true" أو "false".
+
+localStorage.setItem("darkMode", ...)
+
+يخزن القيمة المحولة في localStorage باستخدام المفتاح "darkMode".
+
+💡 أمثلة عملية
+✅ حالة darkMode = true
+
+let darkMode = true;
+localStorage.setItem("darkMode", JSON.stringify(darkMode ?? false));
+🔹 القيمة المخزنة في localStorage → "true"
+
+✅ حالة darkMode = false
+
+let darkMode = false;
+localStorage.setItem("darkMode", JSON.stringify(darkMode ?? false));
+🔹 القيمة المخزنة في localStorage → "false"
+
+✅ حالة darkMode = undefined (يتم تصحيحه إلى false)
+
+let darkMode; // undefined
+localStorage.setItem("darkMode", JSON.stringify(darkMode ?? false));
+🔹 القيمة المخزنة في localStorage → "false"
+
+⚠️ لماذا نستخدم ?? وليس ||؟
+|| (OR) كان يمكن أن يعمل أيضًا، ولكن الفرق هو أنه يعالج القيم الـ falsy (مثل 0, "", false) على أنها غير صالحة.
+
+?? (nullish coalescing) يعالج فقط null و undefined، مما يمنع أي تغيير غير متوقع في القيم.
+
+📌 مثال يوضح الفرق:
+
+
+let darkMode = false;
+console.log(darkMode || true); // ❌ النتيجة: true (خطأ!)
+console.log(darkMode ?? true); // ✅ النتيجة: false (صحيح!)
+💡 لهذا السبب نستخدم ?? بدلاً من || لضمان الاحتفاظ بالقيم الصحيحة! 🚀
+*/
