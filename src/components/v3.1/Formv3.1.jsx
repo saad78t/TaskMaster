@@ -12,7 +12,7 @@ Why Not Check in the Reducer?
 
 import { useContext, useReducer } from "react";
 import styles from "../styles";
-import SelectComponent from "../SelectComponent";
+import SelectComponent from "../v3.1/SelectComponent-V3.1";
 import Button from "../Button";
 import { TasksContext } from "../../App-v3.1";
 

@@ -2,19 +2,18 @@ import styles from "./styles";
 import { useTasks } from "../TasksProvider";
 
 function Header() {
-  const { version } = useTasks();
+  const { version, darkMode, toggleDarkMode } = useTasks();
 
-  // let version = "Unknown";
-  // if (document.currentScript?.src.includes("App-v1")) version = "v1";
-  // else if (document.currentScript?.src.includes("App-v2")) version = "v2";
-  // else if (document.currentScript?.src.includes("App-v3")) version = "v3";
   return (
-    <div style={styles.header}>
-      <p>
+    <header style={styles(darkMode).header}>
+      <span style={styles(darkMode).headerText}>
         📔TaskMaster {version} using a separate file of useContext & useReducer
-        hook which is TasksProvider.js📝
-      </p>
-    </div>
+        hook which is TasksProvider.js📝{" "}
+      </span>
+      <button style={styles(darkMode).toggleButton} onClick={toggleDarkMode}>
+        {darkMode ? "☀ Light Mode" : "🌙 Dark Mode"}
+      </button>{" "}
+    </header>
   );
 }
 

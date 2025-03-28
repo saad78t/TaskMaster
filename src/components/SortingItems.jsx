@@ -3,11 +3,11 @@ import styles from "./styles";
 import { useTasks } from "../TasksProvider";
 
 function SortingItems() {
-  const { clearList, sortBy, dispatch } = useTasks();
+  const { clearList, sortBy, dispatch, darkMode } = useTasks();
   return (
-    <section style={styles.controls}>
+    <section style={styles(darkMode).controls}>
       <select
-        style={styles.select}
+        style={styles(darkMode).select}
         value={sortBy}
         onChange={(e) => dispatch({ type: "sort", payload: e.target.value })}
       >

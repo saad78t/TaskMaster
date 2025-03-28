@@ -8,13 +8,22 @@ const TasksContext = createContext();
 
 function getInitialState() {
   const savedItems = localStorage.getItem("itemsV3.2");
-  return savedItems
-    ? { items: JSON.parse(savedItems), sortBy: "input" }
-    : { items: [], sortBy: "input" };
+  const savedDarkMode = localStorage.getItem("darkModeV3.2");
+
+  return {
+    items: savedItems ? JSON.parse(savedItems) : [],
+    darkMode: savedDarkMode ? JSON.parse(savedDarkMode) : false,
+    sortBy: "input",
+  };
+  // return savedItems
+  //   ? { items: JSON.parse(savedItems), sortBy: "input" }
+  //   : { items: [], sortBy: "input" };
 }
 
 function reducer(state, action) {
   switch (action.type) {
+    case "dark/mode":
+      return { ...state, darkMode: !state.darkMode };
     case "set/items":
       return { ...state, items: action.payload };
     case "add/item":
@@ -42,7 +51,7 @@ function reducer(state, action) {
       return !state.items.length ||
         !window.confirm("Are you sure you want to delete all items?")
         ? state // If no items or user cancels, return the current state
-        : { items: [], sortBy: "input" }; // Reset state if confirmed
+        : { items: [], sortBy: "input", darkMode: state.darkMode }; // Reset state if confirmed
     case "edit/item":
       return {
         ...state,
@@ -58,7 +67,7 @@ function reducer(state, action) {
 }
 
 function TasksProvider({ children }) {
-  const [{ items, sortBy }, dispatch] = useReducer(
+  const [{ items, sortBy, darkMode }, dispatch] = useReducer(
     reducer,
     null,
     getInitialState
@@ -73,15 +82,15 @@ function TasksProvider({ children }) {
 
     try {
       const decodedData =
-        LZString.decompressFromEncodedURIComponent(compressedTasks); // 🔹 فك الضغط
+        LZString.decompressFromEncodedURIComponent(compressedTasks); // Decompress
       const parsedItems = JSON.parse(decodedData);
       if (Array.isArray(parsedItems)) {
         dispatch({ type: "set/items", payload: parsedItems });
       } else {
-        console.error("⚠️ البيانات غير صحيحة:", parsedItems);
+        console.error("⚠️ Incorrect data:", parsedItems);
       }
     } catch (e) {
-      console.error("❌ خطأ في تحليل البيانات من الرابط:", e);
+      console.error("❌ Error parsing data from link:", e);
     }
     // eslint-disable-next-line
   }, []);
@@ -107,6 +116,13 @@ function TasksProvider({ children }) {
     ); // 🔹 Data compression
     setSearchParams({ tasks: compressedData }); // 🔹 Store it compressed in a `URL`
   }, [items, setSearchParams]);
+
+  useEffect(
+    function () {
+      localStorage.setItem("darkModeV3.2", JSON.stringify(darkMode ?? false));
+    },
+    [darkMode]
+  );
 
   // Extract version from file name (e.g., "App-v2.js" → "v2")
   // const version = import.meta.url.match(/App-(v\d+)/)?.[1] || "Unknown";
@@ -141,6 +157,10 @@ function TasksProvider({ children }) {
     dispatch({ type: "edit/item", payload: { id, newNote } });
   }
 
+  function toggleDarkMode() {
+    dispatch({ type: "dark/mode" });
+  }
+
   return (
     <TasksContext.Provider
       value={{
@@ -148,6 +168,8 @@ function TasksProvider({ children }) {
         sortBy,
         sortedItems,
         items,
+        darkMode,
+        toggleDarkMode,
         dispatch,
         clearList,
         editItem,

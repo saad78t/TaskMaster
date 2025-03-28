@@ -227,6 +227,7 @@ const styles = (darkMode) => ({
   toggleButton: {
     position: "absolute",
     right: "20px", // Moves the button to the far right
+    top: "65px",
     padding: "10px 15px",
     background: darkMode ? "#FFD700" : "#333",
     color: darkMode ? "black" : "white",

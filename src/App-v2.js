@@ -11,7 +11,7 @@ import { useSearchParams } from "react-router-dom";
 
 function getInitialState() {
   const savedItems = localStorage.getItem("itemsV2");
-  const savedDarkMode = localStorage.getItem("darkMode");
+  const savedDarkMode = localStorage.getItem("darkModeV2");
 
   return {
     darkMode: savedDarkMode ? JSON.parse(savedDarkMode) : false,
@@ -111,7 +111,7 @@ function App() {
 
   useEffect(
     function () {
-      localStorage.setItem("darkMode", JSON.stringify(darkMode ?? false));
+      localStorage.setItem("darkModeV2", JSON.stringify(darkMode ?? false));
     },
     [darkMode]
   );

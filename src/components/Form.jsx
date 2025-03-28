@@ -51,7 +51,7 @@ function Form() {
     reducer,
     initialState
   );
-  const { onAddItem } = useTasks();
+  const { onAddItem, darkMode } = useTasks();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -73,7 +73,7 @@ function Form() {
 
   return (
     <section>
-      <form style={styles.form} onSubmit={handleSubmit}>
+      <form style={styles(darkMode).form} onSubmit={handleSubmit}>
         <SelectComponent
           value={times1}
           onChange={(e) =>
@@ -89,7 +89,8 @@ function Form() {
 
         <input
           type="text"
-          style={styles.input}
+          className={darkMode ? "dark-mode-placeholder" : ""}
+          style={styles(darkMode).input}
           value={note}
           onChange={(e) =>
             dispatch({ type: "add/note", payload: e.target.value })

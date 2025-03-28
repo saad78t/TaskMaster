@@ -2,10 +2,12 @@ import styles from "./styles";
 import { useTasks } from "../TasksProvider";
 
 function Footer() {
-  const { items } = useTasks();
+  const { items, darkMode } = useTasks();
   if (!items?.length)
     return (
-      <p style={styles.footer}>Start adding tasks to your daily schedule.</p>
+      <p style={styles(darkMode).footer}>
+        Start adding tasks to your daily schedule.
+      </p>
     );
 
   const itemsNum = items.length;
@@ -21,10 +23,10 @@ function Footer() {
   // const itemsCompleted = items.filter(item=> item.completed).length
 
   return (
-    <div style={styles.footer}>
+    <div style={styles(darkMode).footer}>
       <p>
         {percentage === 100
-          ? "you have completed your tasks"
+          ? "You have completed your tasks"
           : `        You have ${itemsNum} items on your list, and ${itemsCompleted} item
         completed ${percentage} %
 `}

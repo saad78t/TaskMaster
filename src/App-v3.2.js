@@ -4,21 +4,20 @@ import Items from "./components/Items";
 import Footer from "./components/Footer";
 import SortingItems from "./components/SortingItems";
 import styles from "./components/styles";
-import { TasksProvider } from "./TasksProvider";
+import { useTasks } from "./TasksProvider";
 
 function App() {
+  const { darkMode } = useTasks();
   return (
-    <TasksProvider>
-      <div style={styles.container}>
-        <Header />
-        <section style={styles.formContainer}>
-          <SortingItems />
-          <Form />
-        </section>
-        <Items />
-        <Footer />
-      </div>
-    </TasksProvider>
+    <div style={styles(darkMode).container}>
+      <Header />
+      <section style={styles(darkMode).formContainer}>
+        <SortingItems />
+        <Form />
+      </section>
+      <Items />
+      <Footer />
+    </div>
   );
 }
 

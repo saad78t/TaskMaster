@@ -1,8 +1,9 @@
-import styles from "./styles";
-import { useTasks } from "../TasksProvider";
+import { useContext } from "react";
+import styles from "../styles";
+import { TasksContext } from "../../App-v3.1";
 
 function SelectComponent({ value, onChange }) {
-  const { darkMode } = useTasks();
+  const { darkMode } = useContext(TasksContext);
 
   return (
     <select style={styles(darkMode).select} value={value} onChange={onChange}>
