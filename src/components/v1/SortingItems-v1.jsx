@@ -13,7 +13,7 @@ function SortingItems({ clearList, sortBy, setSortBy, darkMode }) {
         <option value="note">sort by notes</option>
         <option value="completed">sort by completed</option>
       </select>
-      <Button type="clear" onClick={() => clearList()}>
+      <Button darkMode={darkMode} type="clear" onClick={() => clearList()}>
         clear
       </Button>
     </section>

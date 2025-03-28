@@ -1,4 +1,4 @@
-import Item from "../v1/Item-v1&2";
+import Item from "./Item-V1";
 import styles from "../styles";
 
 // const items = [

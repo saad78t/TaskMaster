@@ -6,7 +6,6 @@ import Footer from "./components/v3.1/Footer-v3.1";
 import SortingItems from "./components/v3.1/SortingItems-v3.1";
 import styles from "./components/styles";
 import { useSearchParams } from "react-router-dom";
-import { jsxs } from "react/jsx-runtime";
 
 // const initialState = { items: [], sortBy: "input" };
 

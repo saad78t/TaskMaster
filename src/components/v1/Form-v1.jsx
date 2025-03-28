@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "../styles";
-import SelectComponent from "../v2/SelectComponent-v1&2";
-import Button from "../Button";
+import SelectComponent from "./SelectComponent-V1";
+import Button from "./Button-V1";
 
 function Form({ onAddItem, darkMode }) {
   const [note, setNote] = useState("");
@@ -56,7 +56,9 @@ function Form({ onAddItem, darkMode }) {
           placeholder="enter a notification"
         />
 
-        <Button type="add">add</Button>
+        <Button darkMode={darkMode} type="add">
+          add
+        </Button>
       </form>
     </section>
   );

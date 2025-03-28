@@ -75,16 +75,16 @@ const styles = (darkMode) => ({
   clearButton: {
     textTransform: "uppercase",
     padding: "10px 15px",
-    background: "#ff5c5c",
+    background: darkMode ? "#444" : "#ff5c5c",
     color: "white",
-    border: "none",
+    border: `1px solid ${darkMode ? "#bbb" : ""}`,
     borderRadius: "5px",
     cursor: "pointer",
     fontSize: "16px",
     transition: "background 0.3s ease", // Smooth hover effect
   },
   clearButtonHover: {
-    background: "#e04444",
+    background: darkMode ? "#292929" : "#e04444",
   },
   form: {
     display: "flex",
@@ -121,9 +121,9 @@ const styles = (darkMode) => ({
   submitButton: {
     textTransform: "uppercase",
     padding: "12px 20px",
-    background: "#28a745",
+    background: darkMode ? "#444" : "#28a745",
     color: "white",
-    border: "none",
+    border: `1px solid ${darkMode ? "#bbb" : ""}`,
     borderRadius: "5px",
     cursor: "pointer",
     fontSize: "16px",
@@ -132,7 +132,7 @@ const styles = (darkMode) => ({
     transition: "background 0.3s ease",
   },
   submitButtonHover: {
-    background: "#218838",
+    background: darkMode ? "#292929" : "#218838",
   },
   transparentButton: {
     background: "transparent",
@@ -197,11 +197,12 @@ const styles = (darkMode) => ({
     transform: "scale(1.5)",
     height: "18px",
     cursor: "pointer",
+    backgroundColor: "red",
   },
   deleteButton: {
-    background: "#ff5c5c",
+    background: darkMode ? "#444" : "#ff5c5c",
     color: "white",
-    border: "none",
+    border: `1px solid ${darkMode ? "#bbb" : ""}`,
     fontSize: "18px",
     cursor: "pointer",
     borderRadius: "5px",
@@ -209,7 +210,7 @@ const styles = (darkMode) => ({
     transition: "background 0.3s ease",
   },
   deleteButtonHover: {
-    background: "#e04444",
+    background: darkMode ? "#292929" : "#e04444",
   },
   footer: {
     gridArea: "footer",

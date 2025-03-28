@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import Header from "./components/v1/Header-v1&2";
-import Form from "./components/v1/Form-v1";
-import Items from "./components/v1/Items-V1&V2";
-import Footer from "./components/v1/Footerv1-v2";
-import SortingItems from "./components/v1/SortingItems-v1";
+import Header from "./components/v1/Header-V1";
+import Form from "./components/v1/Form-V1";
+import Items from "./components/v1/Items-V1";
+import Footer from "./components/v1/Footer-V1";
+import SortingItems from "./components/v1/SortingItems-V1";
 import styles from "./components/styles";
+import DraggableButton from "./components/v1/DraggableButton";
 
 function App() {
   const [items, setItems] = useState(() => {
@@ -15,12 +16,12 @@ function App() {
   });
   const [sortBy, setSortBy] = useState("input");
   const [searchParams, setSearchParams] = useSearchParams();
-  // استرجاع حالة الدارك مود من localStorage عند تحميل التطبيق
+  // Retrieve dark mode state from localStorage when loading the application
   const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem("darkModeV1") === "true"; // تحويل النص إلى boolean
+    return localStorage.getItem("darkModeV1") === "true"; // Convert text to boolean
   });
 
-  // حفظ حالة الدارك مود في localStorage عند تغييره
+  // Save the dark mode state to localStorage when changing it
   useEffect(() => {
     localStorage.setItem("darkModeV1", darkMode);
   }, [darkMode]);
@@ -124,8 +125,13 @@ function App() {
       <Header
         version={version}
         darkMode={darkMode}
+        // toggleDarkMode={() => setDarkMode((darkMode) => !darkMode)}
+      />
+      <DraggableButton
+        darkMode={darkMode}
         toggleDarkMode={() => setDarkMode((darkMode) => !darkMode)}
       />
+      {console.log("DRAGAABLE BUTTON", darkMode)}
       <section style={styles(darkMode).formContainer}>
         <SortingItems
           sortBy={sortBy}
