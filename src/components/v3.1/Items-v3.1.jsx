@@ -4,10 +4,10 @@ import styles from "../styles";
 import { TasksContext } from "../../App-v3.1";
 
 function Items() {
-  const { sortedItems } = useContext(TasksContext);
+  const { sortedItems, darkMode } = useContext(TasksContext);
 
   return (
-    <section style={styles.itemsContainer}>
+    <section style={styles(darkMode).itemsContainer}>
       <ul>
         {sortedItems?.map((item, i) => (
           <Item item={item} key={i} />

@@ -32,8 +32,12 @@ const styles = (darkMode) => ({
   headerText: {
     position: "absolute",
     left: "50%",
-    transform: "translateX(-50%)", // Centers the text exactly
+    transform: "translateX(-50%)", // لتوسيط النص
     fontWeight: "bold",
+    whiteSpace: "nowrap", // منع النص من الانتقال إلى سطر جديد
+    overflow: "hidden", // منع ظهور النص الزائد خارج الحاوية
+    textOverflow: "ellipsis", // إضافة "..." إذا كان النص أطول من المساحة المتاحة
+    maxWidth: "90%", // التأكد من أن النص لا يتجاوز عرض الشاشة
   },
 
   formContainer: {

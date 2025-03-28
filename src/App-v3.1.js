@@ -6,18 +6,28 @@ import Footer from "./components/v3.1/Footer-v3.1";
 import SortingItems from "./components/v3.1/SortingItems-v3.1";
 import styles from "./components/styles";
 import { useSearchParams } from "react-router-dom";
+import { jsxs } from "react/jsx-runtime";
 
 // const initialState = { items: [], sortBy: "input" };
 
 function getInitialState() {
   const savedItems = localStorage.getItem("itemsV3.1");
-  return savedItems
-    ? { items: JSON.parse(savedItems), sortBy: "input" }
-    : { items: [], sortBy: "input" };
+  const savedDarkMode = localStorage.getItem("darkModev3.1");
+
+  return {
+    items: savedItems ? JSON.parse(savedItems) : [],
+    darkMode: savedDarkMode ? JSON.parse(savedDarkMode) : false,
+    sortBy: "input",
+  };
+  // return savedItems
+  //   ? { items: JSON.parse(savedItems), sortBy: "input" }
+  //   : { items: [], sortBy: "input" };
 }
 
 function reducer(state, action) {
   switch (action.type) {
+    case "dark/mode":
+      return { ...state, darkMode: !state.darkMode };
     case "set/items":
       return { ...state, items: action.payload };
     case "add/item":
@@ -45,7 +55,7 @@ function reducer(state, action) {
       return !state.items.length ||
         !window.confirm("Are you sure you want to delete all items?")
         ? state // If no items or user cancels, return the current state
-        : { items: [], sortBy: "input" }; // Reset state if confirmed
+        : { items: [], sortBy: "input", darkMode: state.darkMode }; // Reset state if confirmed
     case "edit/item":
       return {
         ...state,
@@ -64,7 +74,7 @@ function reducer(state, action) {
 export const TasksContext = createContext();
 
 function App() {
-  const [{ items, sortBy }, dispatch] = useReducer(
+  const [{ items, sortBy, darkMode }, dispatch] = useReducer(
     reducer,
     null,
     getInitialState
@@ -112,6 +122,13 @@ function App() {
     [items]
   );
 
+  useEffect(
+    function () {
+      localStorage.setItem("darkModev3.1", JSON.stringify(darkMode ?? false));
+    },
+    [darkMode]
+  );
+
   // Extract version from file name (e.g., "App-v2.js" → "v2")
   const version = import.meta.url.match(/App-(v\d+)/)?.[1] || "Unknown";
   let sortedItems;
@@ -143,6 +160,10 @@ function App() {
     dispatch({ type: "edit/item", payload: { id, newNote } });
   }
 
+  function toggleDarkMode() {
+    dispatch({ type: "dark/mode" });
+  }
+
   return (
     <TasksContext.Provider
       value={{
@@ -150,6 +171,8 @@ function App() {
         sortBy,
         sortedItems,
         items,
+        darkMode,
+        toggleDarkMode,
         dispatch,
         clearList,
         editItem,
@@ -158,9 +181,9 @@ function App() {
         onToggleItem: handleToggleItem,
       }}
     >
-      <div style={styles.container}>
+      <div style={styles(darkMode).container}>
         <Header />
-        <section style={styles.formContainer}>
+        <section style={styles(darkMode).formContainer}>
           <SortingItems />
           <Form />
         </section>

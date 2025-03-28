@@ -4,11 +4,11 @@ import styles from "../styles";
 import { TasksContext } from "../../App-v3.1";
 
 function SortingItems() {
-  const { clearList, sortBy, dispatch } = useContext(TasksContext);
+  const { clearList, sortBy, dispatch, darkMode } = useContext(TasksContext);
   return (
-    <section style={styles.controls}>
+    <section style={styles(darkMode).controls}>
       <select
-        style={styles.select}
+        style={styles(darkMode).select}
         value={sortBy}
         onChange={(e) => dispatch({ type: "sort", payload: e.target.value })}
       >
