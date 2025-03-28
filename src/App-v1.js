@@ -17,12 +17,12 @@ function App() {
   const [searchParams, setSearchParams] = useSearchParams();
   // استرجاع حالة الدارك مود من localStorage عند تحميل التطبيق
   const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem("darkMode") === "true"; // تحويل النص إلى boolean
+    return localStorage.getItem("darkModeV1") === "true"; // تحويل النص إلى boolean
   });
 
   // حفظ حالة الدارك مود في localStorage عند تغييره
   useEffect(() => {
-    localStorage.setItem("darkMode", darkMode);
+    localStorage.setItem("darkModeV1", darkMode);
   }, [darkMode]);
 
   //Retrieve data from URL (with error protection)
