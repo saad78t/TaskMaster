@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import Item from "./Item-v3.1";
+import Item from "./Item-V3.1";
 import styles from "../styles";
 import { TasksContext } from "../../App-v3.1";
 

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import styles from "./styles";
+import { useTasks } from "../TasksProvider";
 
-function Button({ children, type, onClick, darkMode }) {
+function Button({ children, type, onClick }) {
   const [isHovered, setIsHovered] = useState(false);
-
+  const { darkMode } = useTasks();
   if (type === "add")
     return (
       <button

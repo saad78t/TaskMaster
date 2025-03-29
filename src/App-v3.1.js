@@ -1,11 +1,12 @@
 import { createContext, useEffect, useReducer } from "react";
-import Header from "./components/v3.1/Header-v3.1";
-import Form from "./components/v3.1/Formv3.1";
-import Items from "./components/v3.1/Items-v3.1";
-import Footer from "./components/v3.1/Footer-v3.1";
-import SortingItems from "./components/v3.1/SortingItems-v3.1";
+import Header from "./components/v3.1/Header-V3.1";
+import Form from "./components/v3.1/Form-V3.1";
+import Items from "./components/v3.1/Items-V3.1";
+import Footer from "./components/v3.1/Footer-V3.1";
+import SortingItems from "./components/v3.1/SortingItems-V3.1";
 import styles from "./components/styles";
 import { useSearchParams } from "react-router-dom";
+import DraggableButton from "./components/v3.1/DraggableButton";
 
 // const initialState = { items: [], sortBy: "input" };
 
@@ -182,6 +183,7 @@ function App() {
     >
       <div style={styles(darkMode).container}>
         <Header />
+        <DraggableButton />
         <section style={styles(darkMode).formContainer}>
           <SortingItems />
           <Form />

@@ -1,12 +1,20 @@
-import { useState } from "react";
 import styles from "./styles";
 import { useTasks } from "../TasksProvider";
+import { useState } from "react";
 
 function Item({ item }) {
   const [hover, setHover] = useState();
   const [newNote, setNewNote] = useState(item.note);
   const [editing, setEditing] = useState(false);
+  const [readmore, SetReadMore] = useState(false);
+
   const { onDeleteItem, onToggleItem, editItem, darkMode } = useTasks();
+
+  function handleReadMore() {
+    SetReadMore((readmore) => !readmore);
+  }
+
+  const noteText = readmore ? item.note : `${item.note.slice(0, 5)}...`;
 
   function handleEdit() {
     setEditing(true);
@@ -30,7 +38,19 @@ function Item({ item }) {
           <span>{item.times2}</span>
         </div>
 
-        <span style={styles(darkMode).note}>{item.note}</span>
+        {/* <span style={styles(darkMode).note}>{item.note}</span> */}
+
+        <div style={styles(darkMode).noteContainer}>
+          <div style={styles(darkMode).noteWrapper}>
+            <span style={styles(darkMode).note}>{noteText}</span>
+            <button
+              style={styles(darkMode).transparentReadMoreButton}
+              onClick={handleReadMore}
+            >
+              read more
+            </button>
+          </div>
+        </div>
 
         {editing ? (
           <>

@@ -11,10 +11,10 @@ Why Not Check in the Reducer?
 */
 
 import styles from "./styles";
-import SelectComponent from "./SelectComponent";
-import Button from "./Button";
-import { useTasks } from "../TasksProvider";
+import SelectComponent from "./SelectComponent-V3.2";
+import Button from "./Button-V3.2";
 import { useReducer } from "react";
+import { useTasks } from "../TasksProvider";
 
 const initialState = {
   note: "",

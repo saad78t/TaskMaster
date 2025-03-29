@@ -1,6 +1,6 @@
-import Button from "./Button";
-import styles from "./styles";
 import { useTasks } from "../TasksProvider";
+import Button from "./Button-V3.2";
+import styles from "./styles";
 
 function SortingItems() {
   const { clearList, sortBy, dispatch, darkMode } = useTasks();

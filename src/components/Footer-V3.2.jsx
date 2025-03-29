@@ -2,7 +2,7 @@ import styles from "./styles";
 import { useTasks } from "../TasksProvider";
 
 function Footer() {
-  const { items, darkMode } = useTasks();
+  const { items, darkMode } = useTasks;
   if (!items?.length)
     return (
       <p style={styles(darkMode).footer}>

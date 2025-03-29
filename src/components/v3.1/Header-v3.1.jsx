@@ -3,7 +3,7 @@ import styles from "../styles";
 import { TasksContext } from "../../App-v3.1";
 
 function Header() {
-  const { version, darkMode, toggleDarkMode } = useContext(TasksContext);
+  const { version, darkMode } = useContext(TasksContext);
   // let version = "Unknown";
   // if (document.currentScript?.src.includes("App-v1")) version = "v1";
   // else if (document.currentScript?.src.includes("App-v2")) version = "v2";
@@ -11,12 +11,12 @@ function Header() {
   return (
     <header style={styles(darkMode).header}>
       <span style={styles(darkMode).headerText}>
-        📔TaskMaster {version}.1 using useContext & useReducer Hook in the
-        App-v3.1.js file📝
+        📔TaskMaster {version}.1 using useContext & useReducer Hook in the App-
+        {version}.1.js file📝
       </span>
-      <button style={styles(darkMode).toggleButton} onClick={toggleDarkMode}>
+      {/* <button style={styles(darkMode).toggleButton} onClick={toggleDarkMode}>
         {darkMode ? "☀ Light Mode" : "🌙 Dark Mode"}
-      </button>{" "}
+      </button>{" "} */}
     </header>
   );
 }

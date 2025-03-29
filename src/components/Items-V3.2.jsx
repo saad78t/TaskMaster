@@ -1,4 +1,4 @@
-import Item from "./Item";
+import Item from "./Item-V3.2";
 import styles from "./styles";
 import { useTasks } from "../TasksProvider";
 

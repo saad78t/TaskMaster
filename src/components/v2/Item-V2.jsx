@@ -11,6 +11,8 @@ function Item({ item, onDeleteItem, onToggleItem, onEditItem, darkMode }) {
     SetReadMore((readmore) => !readmore);
   }
 
+  const noteText = readmore ? item.note : `${item.note.slice(0, 5)}...`;
+
   function handleEdit() {
     setNewNote(item.note);
     setAccepted(true);
@@ -27,8 +29,6 @@ function Item({ item, onDeleteItem, onToggleItem, onEditItem, darkMode }) {
     setAccepted(false);
     setNewNote(item.note);
   }
-
-  const noteText = readmore ? item.note : `${item.note.slice(0, 5)}...`;
 
   return (
     <div style={styles(darkMode).item}>
