@@ -1,6 +1,6 @@
 import styles from "../styles";
 
-function Header({ version, darkMode, toggleDarkMode }) {
+function Header({ version, darkMode }) {
   // let version = "Unknown";
   // if (document.currentScript?.src.includes("App-v1")) version = "v1";
   // else if (document.currentScript?.src.includes("App-v2")) version = "v2";
@@ -10,9 +10,9 @@ function Header({ version, darkMode, toggleDarkMode }) {
       <span style={styles(darkMode).headerText}>
         📔TaskMaster {version} using useReducer Hook📝
       </span>
-      <button style={styles(darkMode).toggleButton} onClick={toggleDarkMode}>
+      {/* <button style={styles(darkMode).toggleButton} onClick={toggleDarkMode}>
         {darkMode ? "☀ Light Mode" : "🌙 Dark Mode"}
-      </button>{" "}
+      </button>{" "} */}
     </header>
   );
 }

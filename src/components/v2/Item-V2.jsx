@@ -1,56 +1,75 @@
 import { useState } from "react";
-import styles from "./styles";
-import { useTasks } from "../TasksProvider";
+import styles from "../styles";
 
-function Item({ item }) {
-  const [hover, setHover] = useState();
+function Item({ item, onDeleteItem, onToggleItem, onEditItem, darkMode }) {
+  const [hover, setHover] = useState(false);
   const [newNote, setNewNote] = useState(item.note);
-  const [editing, setEditing] = useState(false);
-  const { onDeleteItem, onToggleItem, editItem, darkMode } = useTasks();
+  const [accepted, setAccepted] = useState(false);
+  const [readmore, SetReadMore] = useState(false);
+
+  function handleReadMore() {
+    SetReadMore((readmore) => !readmore);
+  }
 
   function handleEdit() {
-    setEditing(true);
-  }
-
-  function handleSave() {
-    editItem(item.id, newNote);
-    setEditing(false);
-  }
-
-  function discardChanges() {
     setNewNote(item.note);
-    setEditing(false);
+    setAccepted(true);
   }
+
+  function editName() {
+    const trimmedNote = newNote.trim();
+    if (!trimmedNote) return;
+    onEditItem(item.id, trimmedNote);
+    setAccepted(false);
+  }
+
+  function cancelChanges() {
+    setAccepted(false);
+    setNewNote(item.note);
+  }
+
+  const noteText = readmore ? item.note : `${item.note.slice(0, 5)}...`;
 
   return (
     <div style={styles(darkMode).item}>
       <li style={styles(darkMode).listItem}>
-        <div style={styles(darkMode).times}>
-          <span>{item.times1}</span>
-          <span>{item.times2}</span>
+        <div>
+          <div style={styles(darkMode).times}>
+            <span>{item.times1}</span>
+            <span>{item.times2}</span>
+          </div>
+        </div>
+        <div style={styles(darkMode).noteContainer}>
+          <div style={styles(darkMode).noteWrapper}>
+            <span style={styles(darkMode).note}>{noteText}</span>
+            <button
+              style={styles(darkMode).transparentReadMoreButton}
+              onClick={handleReadMore}
+            >
+              read more
+            </button>
+          </div>
         </div>
 
-        <span style={styles(darkMode).note}>{item.note}</span>
-
-        {editing ? (
+        {accepted ? (
           <>
-            <input
-              type="text"
-              value={newNote}
-              onChange={(e) => setNewNote(e.target.value)}
-            />
             <button
               style={styles(darkMode).transparentButton}
-              onClick={() => handleSave()}
+              onClick={() => editName()}
             >
               💾
             </button>
             <button
               style={styles(darkMode).transparentButton}
-              onClick={() => discardChanges()}
+              onClick={() => cancelChanges()}
             >
               ❌
             </button>
+            <input
+              type="text"
+              value={newNote}
+              onChange={(e) => setNewNote(e.target.value)}
+            />
           </>
         ) : (
           <div style={styles(darkMode).actionsContainer}>
@@ -60,7 +79,6 @@ function Item({ item }) {
             >
               ✏️
             </button>
-
             <input
               style={styles(darkMode).checkbox}
               type="checkbox"

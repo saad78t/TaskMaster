@@ -184,13 +184,35 @@ const styles = (darkMode) => ({
     listStyle: "none",
     padding: "5px",
   },
+  noteContainer: {
+    display: "flex",
+    flexDirection: "row", // ⬅ يجعل النص والزر بجانب بعض
+    alignItems: "flex-start", // ⬅ يحافظ على محاذاة الزر بجانب النص
+    flexWrap: "wrap", // ⬅ يسمح للنص والزر بالنزول للأسفل عند الحاجة
+    gap: "5px", // ⬅ مسافة صغيرة بين النص والزر
+    width: "100%",
+    textAlign: "left",
+  },
+  noteWrapper: {
+    display: "inline", // ⬅ يجعل النص والزر داخل نفس الخط
+    maxWidth: "100%", // ⬅ يمنع تجاوز النص للحواف
+  },
   note: {
-    flex: "1",
-    whiteSpace: "normal", // Allows multi-line text
-    wordWrap: "break-word", // Prevents text overflow
-    wordBreak: "break-word", // Ensures long words are broken up
+    display: "inline", // ⬅ يجعل النص في نفس سطر الزر
+    whiteSpace: "normal",
+    wordWrap: "break-word",
+    wordBreak: "break-word",
     overflow: "hidden",
-    textOverflow: "ellipsis", // Adds "..." for overly long text if desired
+  },
+  transparentReadMoreButton: {
+    display: "inline", // ⬅ يجعل الزر في نفس السطر مع النص
+    background: "transparent",
+    border: "none",
+    color: darkMode ? "yellow" : "blue",
+    cursor: "pointer",
+    padding: "0",
+    fontSize: "inherit",
+    marginLeft: "4px", // ⬅️ يضيف مسافة صغيرة بين النص والزر
   },
   checkbox: {
     width: "18px",

@@ -12,7 +12,7 @@ Why Not Check in the Reducer?
 
 import { useReducer } from "react";
 import styles from "../styles";
-import SelectComponent from "./SelectComponent-v1&2";
+import SelectComponent from "./SelectComponent-V2";
 import Button from "../Button";
 
 const initialState = {
@@ -98,7 +98,9 @@ function Form({ onAddItem, darkMode }) {
           placeholder="enter a notification"
         />
 
-        <Button type="add">add</Button>
+        <Button darkMode={darkMode} type="add">
+          add
+        </Button>
       </form>
     </section>
   );
