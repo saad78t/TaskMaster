@@ -13,7 +13,7 @@ Why Not Check in the Reducer?
 import { useReducer } from "react";
 import styles from "../styles";
 import SelectComponent from "./SelectComponent-V2";
-import Button from "../Button";
+import Button from "./Button-V2";
 
 const initialState = {
   note: "",

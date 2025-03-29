@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App-v3.2";
+import App from "./App-v1";
 import { BrowserRouter } from "react-router-dom";
 // eslint-disable-next-line
 import { TasksProvider } from "./TasksProvider";

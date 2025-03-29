@@ -1,4 +1,4 @@
-import Button from "../Button";
+import Button from "./Button-V2";
 import styles from "../styles";
 
 function SortingItems({ clearList, sortBy, dispatch, darkMode }) {
