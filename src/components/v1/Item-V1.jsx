@@ -5,6 +5,11 @@ function Item({ item, onDeleteItem, onToggleItem, onEditItem, darkMode }) {
   const [hover, setHover] = useState(false);
   const [newNote, setNewNote] = useState(item.note);
   const [accepted, setAccepted] = useState(false);
+  const [readmore, SetReadMore] = useState(false);
+
+  function handleReadMore() {
+    SetReadMore((readmore) => !readmore);
+  }
 
   function handleEdit() {
     setNewNote(item.note);
@@ -23,6 +28,8 @@ function Item({ item, onDeleteItem, onToggleItem, onEditItem, darkMode }) {
     setNewNote(item.note);
   }
 
+  const noteText = readmore ? item.note : `${item.note.slice(0, 5)}...`;
+
   return (
     <div style={styles(darkMode).item}>
       <li style={styles(darkMode).listItem}>
@@ -32,7 +39,18 @@ function Item({ item, onDeleteItem, onToggleItem, onEditItem, darkMode }) {
             <span>{item.times2}</span>
           </div>
         </div>
-        <span style={styles(darkMode).note}>{item.note}</span>
+        {/* <span style={styles(darkMode).note}>{item.note}</span> */}
+        <div style={styles(darkMode).noteContainer}>
+          <div style={styles(darkMode).noteWrapper}>
+            <span style={styles(darkMode).note}>{noteText}</span>
+            <button
+              style={styles(darkMode).transparentReadMoreButton}
+              onClick={handleReadMore}
+            >
+              read more
+            </button>
+          </div>
+        </div>
 
         {accepted ? (
           <>
