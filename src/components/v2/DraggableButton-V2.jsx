@@ -31,47 +31,60 @@ function DraggableButton({ darkMode, toggleDarkMode }) {
     initialState
   );
 
-  const handleMouseDown = (e) => {
+  const handleStart = (e) => {
     e.preventDefault();
+    const clientX = e.type === "touchstart" ? e.touches[0].clientX : e.clientX;
+    const clientY = e.type === "touchstart" ? e.touches[0].clientY : e.clientY;
+
     dispatch({
       type: "mouse/down",
       payload: {
-        x: e.clientX - position.x,
-        y: e.clientY - position.y,
+        x: clientX - position.x,
+        y: clientY - position.y,
       },
     });
   };
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
+    const handleMove = (e) => {
       if (!isDragging) return;
+      const clientX = e.type === "touchmove" ? e.touches[0].clientX : e.clientX;
+      const clientY = e.type === "touchmove" ? e.touches[0].clientY : e.clientY;
+
       dispatch({
         type: "mouse/move",
         payload: {
-          x: e.clientX - offset.x,
-          y: e.clientY - offset.y,
+          x: clientX - offset.x,
+          y: clientY - offset.y,
         },
       });
+
+      if (e.type === "touchmove") {
+        e.preventDefault(); // يمنع التمرير أثناء السحب
+      }
     };
 
-    const handleMouseUp = () => {
+    const handleEnd = () => {
       dispatch({ type: "mouse/up" });
     };
 
     if (isDragging) {
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
+      document.addEventListener("mousemove", handleMove);
+      document.addEventListener("mouseup", handleEnd);
+      document.addEventListener("touchmove", handleMove, { passive: false }); // لمنع التمرير
+      document.addEventListener("touchend", handleEnd);
     }
 
     return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
+      document.removeEventListener("mousemove", handleMove);
+      document.removeEventListener("mouseup", handleEnd);
+      document.removeEventListener("touchmove", handleMove);
+      document.removeEventListener("touchend", handleEnd);
     };
   }, [isDragging, offset]);
 
   const handleClick = () => {
     if (!moved) {
-      // Allow pressing only if the button is not moved
       toggleDarkMode();
     }
   };
@@ -89,8 +102,10 @@ function DraggableButton({ darkMode, toggleDarkMode }) {
         borderRadius: "5px",
         cursor: isDragging ? "grabbing" : "grab",
         userSelect: "none",
+        touchAction: "none", // لمنع التمرير العفوي أثناء السحب
       }}
-      onMouseDown={handleMouseDown}
+      onMouseDown={handleStart}
+      onTouchStart={handleStart} // دعم اللمس
       onClick={handleClick}
     >
       {darkMode ? "☀ Light Mode" : "🌙 Dark Mode"}
