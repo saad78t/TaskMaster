@@ -1,4 +1,4 @@
-import styles from "./styles";
+import styles from "../components/styles";
 import { useTasks } from "../TasksProvider";
 
 function Footer() {

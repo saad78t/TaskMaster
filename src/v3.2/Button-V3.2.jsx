@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "./styles";
+import styles from "../components/styles";
 import { useTasks } from "../TasksProvider";
 
 function Button({ children, type, onClick }) {

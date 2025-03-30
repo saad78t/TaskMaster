@@ -1,5 +1,5 @@
 import Item from "./Item-V3.2";
-import styles from "./styles";
+import styles from "../components/styles";
 import { useTasks } from "../TasksProvider";
 
 function Items() {
