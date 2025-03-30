@@ -6,7 +6,7 @@ import Items from "./components/v1/Items-V1";
 import Footer from "./components/v1/Footer-V1";
 import SortingItems from "./components/v1/SortingItems-V1";
 import styles from "./components/styles";
-import DraggableButton from "./components/v1/DraggableButton";
+import DraggableButton from "./components/v1/DraggableButton-V1";
 
 function App() {
   const [items, setItems] = useState(() => {

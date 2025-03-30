@@ -6,7 +6,7 @@ import Footer from "./components/v2/Footer-V2";
 import SortingItems from "./components/v2/SortingItems-V2";
 import styles from "./components/styles";
 import { useSearchParams } from "react-router-dom";
-import DraggableButton from "./components/v2/DraggableButton";
+import DraggableButton from "./components/v2/DraggableButton-V2";
 
 // const initialState = { items: [], sortBy: "input" };
 

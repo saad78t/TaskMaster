@@ -1,34 +1,51 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import styles from "../styles";
 
+const initialState = (item) => ({
+  newNote: item.note,
+  hover: false,
+  editing: false,
+  readmore: false,
+});
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "toggle/hover":
+      return { ...state, hover: action.payload };
+    case "start/edit":
+      return { ...state, newNote: action.payload, editing: true };
+    case "update/note":
+      return { ...state, newNote: action.payload };
+    case "save/note":
+      return { ...state, editing: false };
+    case "toggle/readmore":
+      return { ...state, readmore: !state.readmore };
+    case "cancel/edit":
+      return {
+        ...state,
+        editing: false,
+        newNote: action.payload,
+      };
+    default:
+      return state;
+  }
+}
+
 function Item({ item, onDeleteItem, onToggleItem, onEditItem, darkMode }) {
-  const [hover, setHover] = useState(false);
-  const [newNote, setNewNote] = useState(item.note);
-  const [accepted, setAccepted] = useState(false);
-  const [readmore, SetReadMore] = useState(false);
+  const [{ hover, newNote, editing, readmore }, dispatch] = useReducer(
+    reducer,
+    item,
+    initialState
+  );
 
-  function handleReadMore() {
-    SetReadMore((readmore) => !readmore);
-  }
-
-  const noteText = readmore ? item.note : `${item.note.slice(0, 5)}...`;
-
-  function handleEdit() {
-    setNewNote(item.note);
-    setAccepted(true);
-  }
-
-  function editName() {
+  function editNote() {
     const trimmedNote = newNote.trim();
     if (!trimmedNote) return;
     onEditItem(item.id, trimmedNote);
-    setAccepted(false);
+    dispatch({ type: "save/note" });
   }
 
-  function cancelChanges() {
-    setAccepted(false);
-    setNewNote(item.note);
-  }
+  const noteText = readmore ? item.note : `${item.note.slice(0, 5)}...`;
 
   return (
     <div style={styles(darkMode).item}>
@@ -39,43 +56,52 @@ function Item({ item, onDeleteItem, onToggleItem, onEditItem, darkMode }) {
             <span>{item.times2}</span>
           </div>
         </div>
-        <div style={styles(darkMode).noteContainer}>
-          <div style={styles(darkMode).noteWrapper}>
-            <span style={styles(darkMode).note}>{noteText}</span>
-            <button
-              style={styles(darkMode).transparentReadMoreButton}
-              onClick={handleReadMore}
-            >
-              read more
-            </button>
+        {!editing && (
+          <div style={styles(darkMode).noteContainer}>
+            <div style={styles(darkMode).noteWrapper}>
+              <span style={styles(darkMode).note}>{noteText}</span>
+              <button
+                style={styles(darkMode).transparentReadMoreButton}
+                onClick={() => dispatch({ type: "toggle/readmore" })}
+              >
+                read more
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
-        {accepted ? (
+        {editing ? (
           <>
             <button
               style={styles(darkMode).transparentButton}
-              onClick={() => editName()}
+              onClick={() => editNote()}
             >
               💾
             </button>
             <button
               style={styles(darkMode).transparentButton}
-              onClick={() => cancelChanges()}
+              onClick={() =>
+                dispatch({ type: "cancel/edit", payload: item.note })
+              }
             >
               ❌
             </button>
             <input
               type="text"
               value={newNote}
-              onChange={(e) => setNewNote(e.target.value)}
+              onChange={(e) =>
+                dispatch({ type: "update/note", payload: e.target.value })
+              }
+              style={{ width: `${newNote.length * 8}px` }} // توسيع الحقل بناءً على طول النص
             />
           </>
         ) : (
           <div style={styles(darkMode).actionsContainer}>
             <button
               style={styles(darkMode).transparentButton}
-              onClick={() => handleEdit()}
+              onClick={() =>
+                dispatch({ type: "start/edit", payload: item.note })
+              }
             >
               ✏️
             </button>
@@ -95,8 +121,12 @@ function Item({ item, onDeleteItem, onToggleItem, onEditItem, darkMode }) {
                     }
                   : styles(darkMode).deleteButton
               }
-              onMouseEnter={() => setHover(true)}
-              onMouseLeave={() => setHover(false)}
+              onMouseEnter={() =>
+                dispatch({ type: "toggle/hover", payload: true })
+              }
+              onMouseLeave={() =>
+                dispatch({ type: "toggle/hover", payload: false })
+              }
             >
               &times;
             </button>
