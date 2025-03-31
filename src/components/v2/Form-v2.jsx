@@ -38,6 +38,7 @@ function reducer(state, action) {
         ...state,
         times2: action.payload,
       };
+
     case "reset":
       return { ...initialState };
     default:

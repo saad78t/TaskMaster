@@ -1,6 +1,6 @@
 import Item from "./Item-V3.2";
-import styles from "../components/styles";
-import { useTasks } from "../TasksProvider";
+import styles from "../styles";
+import { useTasks } from "../../TasksProvider";
 
 function Items() {
   const { sortedItems, darkMode } = useTasks();

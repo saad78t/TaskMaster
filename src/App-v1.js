@@ -15,6 +15,7 @@ function App() {
     return savedItems ? JSON.parse(savedItems) : [];
   });
   const [sortBy, setSortBy] = useState("input");
+
   const [searchParams, setSearchParams] = useSearchParams();
   // Retrieve dark mode state from localStorage when loading the application
   const [darkMode, setDarkMode] = useState(() => {
@@ -120,6 +121,16 @@ function App() {
     );
   }
 
+  function handleEditTimes(id, field, newValue) {
+    setItems((items) =>
+      items.map((item) =>
+        item.id === id
+          ? { ...item, [field]: newValue } // تحديث `times1` أو `times2` فقط
+          : item
+      )
+    );
+  }
+
   return (
     <div style={styles(darkMode).container}>
       <Header
@@ -148,6 +159,7 @@ function App() {
         onDeleteItem={handleDelete}
         onToggleItem={handleToggleItem}
         onEditItem={handleEditItem}
+        onEditTimes={handleEditTimes}
         darkMode={darkMode}
       />
       <Footer items={items} darkMode={darkMode} />

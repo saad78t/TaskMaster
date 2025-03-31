@@ -15,3 +15,11 @@ Try to make the request URI shorter.
 
 فك الضغط عند تحميل البيانات من URL.
 
+this is for DarggableButton v3.2
+✔ دعم اللمس (touchstart, touchmove, touchend) 📱
+✔ preventDefault() لمنع تمرير الصفحة أثناء السحب
+✔ touchAction: "none" لمنع السلوك الافتراضي لللمس
+✔ كود أكثر تنظيمًا ووضوحًا
+
+
+

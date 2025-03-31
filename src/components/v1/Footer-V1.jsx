@@ -24,7 +24,7 @@ function Footer({ items, darkMode }) {
     <div style={styles(darkMode).footer}>
       <p>
         {percentage === 100
-          ? "you have completed your tasks"
+          ? "You have completed your tasks"
           : `        You have ${itemsNum} items on your list, and ${itemsCompleted} item
         completed ${percentage} %
 `}

@@ -1,10 +1,22 @@
 import { useState } from "react";
 import styles from "../styles";
+import EditableField from "./EditableField";
 
-function Item({ item, onDeleteItem, onToggleItem, onEditItem, darkMode }) {
+function Item({
+  item,
+  onDeleteItem,
+  onToggleItem,
+  onEditItem,
+  onEditTimes,
+  darkMode,
+}) {
   const [hover, setHover] = useState(false);
   const [newNote, setNewNote] = useState(item.note);
-  const [accepted, setAccepted] = useState(false);
+  const [newTimes1, setNewTimes1] = useState(item.times1);
+  const [newTimes2, setNewTimes2] = useState(item.times2);
+  const [editingTimes1, setEditingTimes1] = useState(false);
+  const [editingTimes2, setEditingTimes2] = useState(false);
+  const [editing, setEditing] = useState(false);
   const [readmore, SetReadMore] = useState(false);
 
   function handleReadMore() {
@@ -13,18 +25,18 @@ function Item({ item, onDeleteItem, onToggleItem, onEditItem, darkMode }) {
 
   function handleEdit() {
     setNewNote(item.note);
-    setAccepted(true);
+    setEditing(true);
   }
 
   function editName() {
     const trimmedNote = newNote.trim();
     if (!trimmedNote) return;
     onEditItem(item.id, trimmedNote);
-    setAccepted(false);
+    setEditing(false);
   }
 
   function cancelChanges() {
-    setAccepted(false);
+    setEditing(false);
     setNewNote(item.note);
   }
 
@@ -35,8 +47,26 @@ function Item({ item, onDeleteItem, onToggleItem, onEditItem, darkMode }) {
       <li style={styles(darkMode).listItem}>
         <div>
           <div style={styles(darkMode).times}>
-            <span>{item.times1}</span>
-            <span>{item.times2}</span>
+            <EditableField
+              item={item}
+              onEditTimes={onEditTimes}
+              value={item.times1}
+              newValue={newTimes1}
+              setNewValue={setNewTimes1}
+              isEditing={editingTimes1}
+              setEditing={setEditingTimes1}
+              field="times1"
+            />
+            <EditableField
+              item={item}
+              onEditTimes={onEditTimes}
+              value={item.times2}
+              newValue={newTimes2}
+              setNewValue={setNewTimes2}
+              isEditing={editingTimes2}
+              setEditing={setEditingTimes2}
+              field="times2"
+            />{" "}
           </div>
         </div>
         {/* <span style={styles(darkMode).note}>{item.note}</span> */}
@@ -52,7 +82,7 @@ function Item({ item, onDeleteItem, onToggleItem, onEditItem, darkMode }) {
           </div>
         </div>
 
-        {accepted ? (
+        {editing ? (
           <>
             <button
               style={styles(darkMode).transparentButton}

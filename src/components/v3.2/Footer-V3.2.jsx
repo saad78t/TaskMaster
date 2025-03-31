@@ -1,5 +1,5 @@
-import styles from "../components/styles";
-import { useTasks } from "../TasksProvider";
+import styles from "../styles";
+import { useTasks } from "../../TasksProvider";
 
 function Footer() {
   const { items, darkMode } = useTasks();

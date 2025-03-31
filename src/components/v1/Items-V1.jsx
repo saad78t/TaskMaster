@@ -22,6 +22,7 @@ function Items({
   onToggleItem,
   onEditItem,
   darkMode,
+  onEditTimes,
 }) {
   return (
     <section style={styles(darkMode).itemsContainer}>
@@ -33,6 +34,7 @@ function Items({
             key={i}
             onToggleItem={onToggleItem}
             onEditItem={onEditItem}
+            onEditTimes={onEditTimes}
             darkMode={darkMode}
           />
         ))}

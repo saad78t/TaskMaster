@@ -1,6 +1,6 @@
 import { useState } from "react";
-import styles from "../components/styles";
-import { useTasks } from "../TasksProvider";
+import styles from "../styles";
+import { useTasks } from "../../TasksProvider";
 
 function Button({ children, type, onClick }) {
   const [isHovered, setIsHovered] = useState(false);

@@ -1,6 +1,6 @@
-import { useContext, useReducer } from "react";
+import { useReducer } from "react";
 import styles from "../styles";
-import { TasksContext } from "../../App-v3.1";
+import { useTasks } from "../../TasksProvider";
 
 const initialState = (item) => ({
   newNote: item.note,
@@ -39,8 +39,7 @@ function Item({ item }) {
     initialState
   );
 
-  const { onDeleteItem, onToggleItem, editItem, darkMode } =
-    useContext(TasksContext);
+  const { onDeleteItem, onToggleItem, editItem, darkMode } = useTasks();
 
   function editNote() {
     const trimmedNote = newNote.trim();
