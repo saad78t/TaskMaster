@@ -31,7 +31,14 @@ function EditableField({
   }
 
   return (
-    <span>
+    <span
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        position: "relative",
+      }}
+    >
       {isEditing ? (
         <>
           <input
@@ -40,13 +47,43 @@ function EditableField({
             onChange={(e) => setNewValue(Number(e.target.value))}
             onKeyDown={handleKeyDown}
             autoFocus
-            style={{ width: `${newValue.toString().length * 7}px` }}
+            style={{
+              width: `${newValue.toString().length * 7}px`,
+              textAlign: "center",
+              padding: "1px",
+              fontSize: "12px",
+            }}
           />
-          <button onClick={editTimes}>✔️</button>
-          <button onClick={handleCancel}>❌</button>
+          <div style={{ display: "flex", gap: "5px", marginTop: "3px" }}>
+            <button
+              onClick={editTimes}
+              style={{
+                padding: "3px",
+                fontSize: "12px",
+                color: "inherit",
+                border: "none",
+              }}
+            >
+              ✔️
+            </button>
+            <button
+              onClick={handleCancel}
+              style={{
+                padding: "3px",
+                fontSize: "12px",
+                color: "inherit",
+                border: "none",
+              }}
+            >
+              ❌
+            </button>
+          </div>
         </>
       ) : (
-        <span onClick={handleStartEdit} style={{ cursor: "pointer" }}>
+        <span
+          onClick={handleStartEdit}
+          style={{ cursor: "pointer", minWidth: "30px", textAlign: "center" }}
+        >
           {value}
         </span>
       )}
