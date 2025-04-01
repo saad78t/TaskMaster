@@ -34,7 +34,7 @@ function DraggableButton() {
   const { darkMode, toggleDarkMode } = useTasks();
 
   const handleStart = (e) => {
-    e.preventDefault();
+    // إزالة e.preventDefault هنا لأننا لا نحتاج إلى منع السلوك الافتراضي عند الضغط فقط
     const clientX = e.type === "touchstart" ? e.touches[0].clientX : e.clientX;
     const clientY = e.type === "touchstart" ? e.touches[0].clientY : e.clientY;
 
@@ -61,8 +61,8 @@ function DraggableButton() {
         },
       });
 
-      if (e.type === "touchmove") {
-        e.preventDefault();
+      if (e.type === "touchmove" && isDragging) {
+        e.preventDefault(); // منع السلوك الافتراضي هنا فقط عند السحب
       }
     };
 
@@ -73,7 +73,7 @@ function DraggableButton() {
     if (isDragging) {
       document.addEventListener("mousemove", handleMove);
       document.addEventListener("mouseup", handleEnd);
-      document.addEventListener("touchmove", handleMove, { passive: false });
+      document.addEventListener("touchmove", handleMove, { passive: false }); // passive: false هنا فقط
       document.addEventListener("touchend", handleEnd);
     }
 
