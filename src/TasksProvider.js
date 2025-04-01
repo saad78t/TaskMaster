@@ -61,6 +61,17 @@ function reducer(state, action) {
             : item
         ),
       };
+
+    case "edit/times": {
+      const { id, field, newValue } = action.payload;
+      return {
+        ...state,
+        items: state.items.map((item) =>
+          item.id === id ? { ...item, [field]: newValue } : item
+        ),
+      };
+    }
+
     default:
       throw new Error("SOMETHING WENT WRONG");
   }
@@ -157,6 +168,10 @@ function TasksProvider({ children }) {
     dispatch({ type: "edit/item", payload: { id, newNote } });
   }
 
+  function handleEditTimes(id, field, newValue) {
+    dispatch({ type: "edit/times", payload: { id, field, newValue } });
+  }
+
   function toggleDarkMode() {
     dispatch({ type: "dark/mode" });
   }
@@ -173,6 +188,7 @@ function TasksProvider({ children }) {
         dispatch,
         clearList,
         editItem,
+        handleEditTimes,
         onAddItem: handleAddItem,
         onDeleteItem: handleDelete,
         onToggleItem: handleToggleItem,

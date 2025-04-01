@@ -24,8 +24,8 @@ const styles = (darkMode) => ({
     position: "relative", // Allows absolute positioning inside
     background: darkMode ? "#333" : "#4facfe",
     color: "white",
-    padding: "50px",
-    fontSize: "24px",
+    padding: "30px 10px",
+    fontSize: "20px",
     fontWeight: "bold",
     borderBottom: `2px solid ${darkMode ? "#555" : "#ccc"}`,
   },
@@ -146,12 +146,13 @@ const styles = (darkMode) => ({
     gridArea: "items",
     display: "flex",
     flexDirection: "column",
+    flexWrap: "wrap",
     gap: "10px",
     padding: "15px",
     background: darkMode ? "#222" : "#fff",
     borderRadius: "8px",
     overflowY: "auto",
-    maxHeight: "50vh",
+    maxHeight: "60vh",
     transition: "all 0.3s ease-in-out", // Smooth scroll effect
   },
   item: {
@@ -266,19 +267,23 @@ const styles = (darkMode) => ({
   },
   // ✅ Responsive Styles (For Mobile)
   "@media (max-width: 787px)": {
-    form: {
-      flexDirection: "grid", // Stack controls & form
-      alignItems: "stretch",
+    header: {
+      fontSize: "18px", // تصغير العنوان أكثر
+      padding: "20px 5px",
     },
-    controls: {
-      width: "100%", // Full width on small screens
-      flexDirection: "column",
+    formContainer: {
+      width: "100%", // ملء الشاشة بالكامل
+      padding: "10px",
     },
-    select: {
-      width: "100%",
+    itemsContainer: {
+      maxHeight: "70vh", // زيادة المساحة المتاحة للعناصر
+      padding: "10px",
     },
     input: {
-      width: "100%",
+      width: "100%", // جعل الإدخال بعرض الشاشة
+    },
+    submitButton: {
+      width: "100%", // جعل الزر يأخذ عرض الشاشة بالكامل
     },
   },
 });
