@@ -21,6 +21,7 @@ function Items({
   onDeleteItem,
   onToggleItem,
   onEditItem,
+  onEditTimes,
   darkMode,
 }) {
   return (
@@ -33,6 +34,7 @@ function Items({
             key={i}
             onToggleItem={onToggleItem}
             onEditItem={onEditItem}
+            onEditTimes={onEditTimes}
             darkMode={darkMode}
           />
         ))}

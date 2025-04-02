@@ -164,25 +164,6 @@ function Item({ item }) {
               }
               field="times1"
             /> */}
-            {/* <EditableField
-              item={item}
-              onEditTimes={handleEditTimes}
-              value={item.times2}
-              isEditing={editingTimes2}
-              setEditing={() => dispatch({ type: "start/editTimes2" })}
-              saveEditing={() => dispatch({ type: "save/editTimes2" })}
-              cancelEditing={() =>
-                dispatch({ type: "cancel/editTimes2", payload: item.times2 })
-              }
-              newValue={newTimes2}
-              setNewValue={(e) =>
-                dispatch({
-                  type: "update/times2",
-                  payload: Number(e.target.value),
-                })
-              }
-              field="times2"
-            /> */}
           </div>
         </div>
         <div style={styles(darkMode).noteContainer}>

@@ -1,5 +1,3 @@
-import { useTasks } from "../../TasksProvider";
-
 function EditableField({
   value,
   isEditing,
@@ -9,19 +7,22 @@ function EditableField({
   item,
   field,
   onEditTimes,
-  saveEditing,
-  cancelEditing,
+  saveNewTimes,
+  cancelEditTimes,
+  darkMode,
 }) {
-  const { darkMode } = useTasks();
-
-  function editTimes() {
+  function saveTimes() {
     if (newValue <= 0 || newValue >= 21) return;
     onEditTimes(item.id, field, newValue);
-    saveEditing();
+    saveNewTimes();
+  }
+
+  function startEditing() {
+    setEditing();
   }
 
   function handleKeyDown(e) {
-    if (e.key === "Enter") editTimes();
+    if (e.key === "Enter") saveTimes();
   }
 
   return (
@@ -36,23 +37,21 @@ function EditableField({
       {isEditing ? (
         <>
           <div style={{ display: "flex", gap: "5px", marginBottom: "3px" }}>
-            <button onClick={editTimes} style={buttonStyle(darkMode)}>
+            <button onClick={saveTimes} style={buttonStyle(darkMode)}>
               &#x2713;
             </button>
             <button
-              onClick={cancelEditing}
-              style={{
-                ...buttonStyle(darkMode),
-                color: darkMode && "#FF0000",
-                fontSize: "40px",
-              }}
+              onClick={cancelEditTimes}
+              style={{ ...buttonStyle(darkMode), color: "red" }}
             >
               &times;
             </button>
           </div>
+
           <input
             type="text"
             value={newValue}
+            field={field}
             onChange={setNewValue}
             onKeyDown={handleKeyDown}
             autoFocus
@@ -60,7 +59,7 @@ function EditableField({
           />
         </>
       ) : (
-        <span onClick={setEditing} style={textStyle}>
+        <span onClick={startEditing} style={textStyle}>
           {value}
         </span>
       )}
@@ -71,7 +70,7 @@ function EditableField({
 const buttonStyle = (darkMode) => ({
   padding: "3px",
   fontSize: "24px", // حجم مناسب للأيقونة
-  color: darkMode ? "#90EE90" : "black", // ✅ لون الأيقونة حسب الثيم
+  color: darkMode ? "green" : "black", // ✅ لون الأيقونة حسب الثيم
   background: "none", // ✅ إزالة أي خلفية
   border: "none", // ✅ إزالة أي حدود
   cursor: "pointer",

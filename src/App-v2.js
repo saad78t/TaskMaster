@@ -70,7 +70,14 @@ function reducer(state, action) {
             : item
         ),
       };
-
+    case "edit/times":
+      const { id, field, newTimes } = action.payload;
+      return {
+        ...state,
+        items: state.items.map((item) =>
+          item.id === id ? { ...item, [field]: newTimes } : item
+        ),
+      };
     default:
       console.error(`Unknown action type: ${action.type}`, action);
       return state;
@@ -176,6 +183,10 @@ function App() {
     dispatch({ type: "edit/item", payload: { id, newNote } });
   }
 
+  function handleEditTimes(id, field, newTimes) {
+    dispatch({ type: "edit/times", payload: { id, field, newTimes } });
+  }
+
   function toggleDarkMode() {
     dispatch({ type: "dark/mode" });
   }
@@ -205,6 +216,7 @@ function App() {
         onDeleteItem={handleDelete}
         onToggleItem={handleToggleItem}
         onEditItem={handleEditItem}
+        onEditTimes={handleEditTimes}
       />
       <Footer items={items} darkMode={darkMode} />
     </div>
