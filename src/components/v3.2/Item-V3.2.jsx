@@ -42,6 +42,7 @@ function reducer(state, action) {
           [`editing${action.payload}`]: true,
         },
       };
+
     case "update/times":
       return {
         ...state,

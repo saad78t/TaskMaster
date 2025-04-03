@@ -1,12 +1,15 @@
 import { useContext, useReducer } from "react";
 import styles from "../styles";
 import { TasksContext } from "../../App-v3.1";
+import EditableField from "./EditableField-V3.1";
 
 const initialState = (item) => ({
   newNote: item.note,
   hover: false,
   editing: false,
   readmore: false,
+  newTimes: { newTimes1: item.times1, newTimes2: item.times2 },
+  editingTimes: { editingTimes1: false, editingTimes2: false },
 });
 
 function reducer(state, action) {
@@ -27,19 +30,55 @@ function reducer(state, action) {
         editing: false,
         newNote: action.payload,
       };
+
+    case "start/editTimes":
+      return {
+        ...state,
+        editingTimes: {
+          ...state.editingTimes,
+          [`editing${action.payload}`]: true,
+        },
+      };
+
+    case "update/times":
+      return {
+        ...state,
+        newTimes: {
+          ...state.newTimes,
+          [`new${action.payload.field}`]: action.payload.value,
+        },
+      };
+
+    case "cancel/editTimes":
+    case "save/EditTimes":
+      return {
+        ...state,
+        ...state,
+        editingTimes: {
+          ...state.editingTimes,
+          [`editing${action.payload.field}`]: false,
+        },
+        ...(action.type === "cancel/editTimes"
+          ? {
+              newTimes: {
+                ...state.newTimes,
+                [`new${action.payload.field}`]: action.payload.value,
+              },
+            }
+          : {}),
+      };
     default:
       return state;
   }
 }
 
 function Item({ item }) {
-  const [{ hover, newNote, editing, readmore }, dispatch] = useReducer(
-    reducer,
-    item,
-    initialState
-  );
+  const [
+    { hover, newNote, editing, newTimes, editingTimes, readmore },
+    dispatch,
+  ] = useReducer(reducer, item, initialState);
 
-  const { onDeleteItem, onToggleItem, editItem, darkMode } =
+  const { onDeleteItem, onToggleItem, editItem, editTimes, darkMode } =
     useContext(TasksContext);
 
   function editNote() {
@@ -49,6 +88,40 @@ function Item({ item }) {
     dispatch({ type: "save/note" });
   }
 
+  function renderEditableField(field, value, newValue) {
+    return (
+      <EditableField
+        item={item}
+        onEditTimes={editTimes}
+        value={value}
+        newValue={newValue}
+        isEditing={editingTimes[`editing${field}`]}
+        setIsEditing={() =>
+          dispatch({
+            type: "start/editTimes",
+            payload: field,
+          })
+        }
+        setNewValue={(e) =>
+          dispatch({
+            type: "update/times",
+            payload: { field, value: Number(e.target.value) },
+          })
+        }
+        saveEditing={() =>
+          dispatch({ type: "save/EditTimes", payload: { field } })
+        }
+        cancelEditing={() =>
+          dispatch({
+            type: "cancel/editTimes",
+            payload: { field, value: item[field.toLowerCase()] },
+          })
+        }
+        field={field.toLowerCase()}
+      />
+    );
+  }
+
   const noteText = readmore ? item.note : `${item.note.slice(0, 5)}...`;
 
   return (
@@ -56,8 +129,8 @@ function Item({ item }) {
       <li style={styles(darkMode).listItem}>
         <div>
           <div style={styles(darkMode).times}>
-            <span>{item.times1}</span>
-            <span>{item.times2}</span>
+            {renderEditableField("Times1", item.times1, newTimes["newTimes1"])}
+            {renderEditableField("Times2", item.times2, newTimes["newTimes2"])}
           </div>
         </div>
         <div style={styles(darkMode).noteContainer}>

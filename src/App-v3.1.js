@@ -65,6 +65,15 @@ function reducer(state, action) {
             : item
         ),
       };
+
+    case "editTimes":
+      const { id, field, newTimes } = action.payload;
+      return {
+        ...state,
+        items: state.items.map((item) =>
+          item.id === id ? { ...item, [field]: newTimes } : item
+        ),
+      };
     default:
       // throw new Error("SOMETHING WENT WRONG");
       return state;
@@ -160,6 +169,10 @@ function App() {
     dispatch({ type: "edit/item", payload: { id, newNote } });
   }
 
+  function editTimes(id, field, newTimes) {
+    dispatch({ type: "editTimes", payload: { id, field, newTimes } });
+  }
+
   function toggleDarkMode() {
     dispatch({ type: "dark/mode" });
   }
@@ -176,6 +189,7 @@ function App() {
         dispatch,
         clearList,
         editItem,
+        editTimes,
         onAddItem: handleAddItem,
         onDeleteItem: handleDelete,
         onToggleItem: handleToggleItem,

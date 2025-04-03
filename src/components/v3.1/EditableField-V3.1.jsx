@@ -1,9 +1,10 @@
-import { useTasks } from "../../TasksProvider";
+import { useContext } from "react";
+import { TasksContext } from "../../App-v3.1";
 
 function EditableField({
   value,
   isEditing,
-  setEditing,
+  setIsEditing,
   newValue,
   setNewValue,
   item,
@@ -12,16 +13,16 @@ function EditableField({
   saveEditing,
   cancelEditing,
 }) {
-  const { darkMode } = useTasks();
+  const { darkMode } = useContext(TasksContext);
 
-  function editTimes() {
+  function saveEditTimes() {
     if (newValue <= 0 || newValue >= 21) return;
     onEditTimes(item.id, field, newValue);
     saveEditing();
   }
 
   function handleKeyDown(e) {
-    if (e.key === "Enter") editTimes();
+    if (e.key === "Enter") saveEditTimes();
   }
 
   return (
@@ -35,7 +36,7 @@ function EditableField({
     >
       {isEditing ? (
         <>
-          <button onClick={editTimes} style={buttonStyle(darkMode)}>
+          <button onClick={saveEditTimes} style={buttonStyle(darkMode)}>
             &#x2713;
           </button>
           <button
@@ -59,7 +60,7 @@ function EditableField({
           />
         </>
       ) : (
-        <span onClick={setEditing} style={textStyle}>
+        <span onClick={setIsEditing} style={textStyle}>
           {value}
         </span>
       )}
