@@ -94,6 +94,7 @@ function TasksProvider({ children }) {
     try {
       const decodedData =
         LZString.decompressFromEncodedURIComponent(compressedTasks); // Decompress
+
       const parsedItems = JSON.parse(decodedData);
       if (Array.isArray(parsedItems)) {
         dispatch({ type: "set/items", payload: parsedItems });

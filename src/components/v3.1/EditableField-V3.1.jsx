@@ -36,19 +36,21 @@ function EditableField({
     >
       {isEditing ? (
         <>
-          <button onClick={saveEditTimes} style={buttonStyle(darkMode)}>
-            &#x2713;
-          </button>
-          <button
-            onClick={cancelEditing}
-            style={{
-              ...buttonStyle(darkMode),
-              color: darkMode ? "#FF0000" : "blueviolet",
-              fontSize: "40px",
-            }}
-          >
-            &times;
-          </button>
+          <div style={{ display: "flex", gap: "5px", marginBottom: "3px" }}>
+            <button onClick={saveEditTimes} style={buttonStyle(darkMode)}>
+              &#x2713;
+            </button>
+            <button
+              onClick={cancelEditing}
+              style={{
+                ...buttonStyle(darkMode),
+                color: darkMode && "#FF0000",
+                fontSize: "30px",
+              }}
+            >
+              &times;
+            </button>
+          </div>
 
           <input
             type="text"

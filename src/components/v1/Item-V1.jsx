@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "../styles";
-import EditableField from "./EditableField";
+import EditableField from "./EditableField-V1";
 
 function Item({
   item,
