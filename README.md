@@ -109,6 +109,35 @@ npm start
 
 ---
 
-## 📚 Learning Goal
-This project was built as a hands-on learning exercise in React, exploring different ways to manage state, build reusable components, and handle user interaction in a more advanced and flexible way.
+## 🚀 CI/CD Integration
 
+This project uses **CI/CD** (Continuous Integration and Continuous Deployment) with GitLab to automate the building, testing, and deployment of the app.
+
+### GitLab Pipeline Stages:
+
+🔗 [View CI/CD Pipeline on GitLab](https://gitlab.com/saadturky/tasksmaster/-/pipelines/1749581422)
+
+
+1. **Install Browser**: 
+   The pipeline installs the Microsoft Edge browser to run tests in a controlled environment.
+
+2. **Deploy to GitLab Pages**: 
+   After the build process, the application is deployed automatically to **GitLab Pages**, making it publicly accessible.
+
+3. **Run Robot Framework Tests**:
+   The app runs automated tests using the **Robot Framework** to ensure the functionality works across multiple browsers:
+   - **Google Chrome**
+   - **Mozilla Firefox**
+   - **Microsoft Edge**
+   
+   All tests have passed successfully on these browsers.
+
+### Notes on CI/CD:
+- **GitLab Pages** provides a free hosting platform for static websites. A link to the live deployed application is included in the project description on GitLab, and the app is published there for easy access by anyone.
+- The **Robot Framework** ensures cross-browser compatibility by running the same test suite on Chrome, Firefox, and Edge.
+
+---
+
+## 📚 Learning Goal
+
+This project was built as a hands-on learning exercise in React, exploring different ways to manage state, build reusable components, and handle user interaction in a more advanced and flexible way.
