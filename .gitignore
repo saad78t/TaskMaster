@@ -2,7 +2,6 @@
 
 # dependencies
 /node_modules
-/screenshots
 /notifications
 /.pnp
 .pnp.js
