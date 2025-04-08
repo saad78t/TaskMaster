@@ -76,25 +76,25 @@ src/
 Below are some screenshots of the application with brief descriptions of their functionality:
 
 1. **Main application image**  
-   ![Main application image](./screenshots/screenshots/Main%20application%20image.png)
+   ![Main application image](./screenshots/Main%20application%20image.png)
 
 2. **How to use `index.js` file**  
-   ![How to use index.js file](./screenshots/screenshots/how%20to%20use%20index.js%20file.png)
+   ![How to use index.js file](./screenshots/how%20to%20use%20index.js%20file.png)
 
 3. **Application images according to the order of task completion**  
-   ![Order by completion](./screenshots/screenshots/Application%20images%20according%20to%20the%20order%20of%20task%20completion.png)
+   ![Order by completion](./screenshots/Application%20images%20according%20to%20the%20order%20of%20task%20completion.png)
 
 4. **Application images in alphabetical order of notes**  
-   ![Alphabetical order](./screenshots/screenshots/Application%20images%20in%20alphabetical%20order%20of%20notes.png)
+   ![Alphabetical order](./screenshots/Application%20images%20in%20alphabetical%20order%20of%20notes.png)
 
 5. **Image of the application after clicking on the edit note button**  
-   ![Edit note button](./screenshots/screenshots/Image%20of%20the%20application%20after%20clicking%20on%20the%20edit%20note%20button.png)
+   ![Edit note button](./screenshots/Image%20of%20the%20application%20after%20clicking%20on%20the%20edit%20note%20button.png)
 
 6. **Image of the application after clicking on the number for editing**  
-   ![Edit number](./screenshots/screenshots/Image%20of%20the%20application%20after%20clicking%20on%20the%20number%20for%20editing.png)
+   ![Edit number](./screenshots/Image%20of%20the%20application%20after%20clicking%20on%20the%20number%20for%20editing.png)
 
 7. **Image of the application in dark mode with the button position changed**  
-   ![Dark mode](./screenshots/screenshots/Image%20of%20the%20application%20in%20dark%20mode%20with%20the%20button%20position%20changed.png)
+   ![Dark mode](./screenshots/Image%20of%20the%20application%20in%20dark%20mode%20with%20the%20button%20position%20changed.png)
 
 ---
 
