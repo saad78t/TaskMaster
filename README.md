@@ -1,70 +1,114 @@
-# Getting Started with Create React App
+# 📝 TaskMaster - React Notes App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+TaskMaster is a multi-version React application built for learning and practicing different React state management techniques. It allows users to create and manage notes for various purposes, such as gym routines, shopping lists, travel preparation, and general note-taking.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Features
 
-### `npm start`
+- Add new notes with:
+  - Text
+  - Two numeric fields
+- Edit notes:
+  - Text edited via a button that reveals an input field
+  - Numbers edited directly by clicking on them
+- Toggle note expansion to show/hide full text
+- Mark notes as completed
+- Delete individual notes or clear all
+- Sort notes by:
+  - Entry type
+  - Alphabetical order
+  - Completion status
+- View statistics:
+  - Total notes
+  - Completed vs incomplete
+  - Completion percentage
+- Movable dark mode toggle button
+  - Works on touchscreens (phones, tablets)
+  - Can be dragged and placed anywhere
+- Notes are stored in `localStorage`
+- Shareable link with stored notes
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🧪 Project Structure & Versions
 
-### `npm test`
+The app is composed of **three main versions** inside the `src` folder:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **v1**: Uses `useState` only
+- **v2**: Uses `useReducer` only
+- **v3.1**: Uses `useReducer` with `useContext` in the same file
+- **v3.2**: Uses `useReducer` + `useContext` in a separate provider file (`TasksProvider.js`), and exports a custom hook for consuming context
 
-### `npm run build`
+You can switch between versions by editing the `index.js` file and changing the `App` import:
+```js
+// Example: Use version 3.2
+import App from "./App-v3.2";
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Then run the app normally.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 📁 Folder Structure Overview
 
-### `npm run eject`
+```bash
+src/
+├── components/
+│   ├── v1/
+│   ├── v2/
+│   ├── v3.1/
+│   ├── v3.2/
+│   └── styles.js         # shared styling file
+├── TasksProvider.js      # for version 3.2 context provider
+├── App-v1.js
+├── App-v2.js
+├── App-v3.1.js
+├── App-v3.2.js
+├── index.js              # main entry point
+└── index.css
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 📷 Screenshots
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Below are some screenshots of the application with brief descriptions of their functionality:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. **Main application image**  
+   ![Main application image](./screenshots/screenshots/Main%20application%20image.png)
 
-## Learn More
+2. **How to use `index.js` file**  
+   ![How to use index.js file](./screenshots/screenshots/how%20to%20use%20index.js%20file.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+3. **Application images according to the order of task completion**  
+   ![Order by completion](./screenshots/screenshots/Application%20images%20according%20to%20the%20order%20of%20task%20completion.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+4. **Application images in alphabetical order of notes**  
+   ![Alphabetical order](./screenshots/screenshots/Application%20images%20in%20alphabetical%20order%20of%20notes.png)
 
-### Code Splitting
+5. **Image of the application after clicking on the edit note button**  
+   ![Edit note button](./screenshots/screenshots/Image%20of%20the%20application%20after%20clicking%20on%20the%20edit%20note%20button.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+6. **Image of the application after clicking on the number for editing**  
+   ![Edit number](./screenshots/screenshots/Image%20of%20the%20application%20after%20clicking%20on%20the%20number%20for%20editing.png)
 
-### Analyzing the Bundle Size
+7. **Image of the application in dark mode with the button position changed**  
+   ![Dark mode](./screenshots/screenshots/Image%20of%20the%20application%20in%20dark%20mode%20with%20the%20button%20position%20changed.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## 🛠️ Installation & Run
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```bash
+git clone <your-repo-url>
+cd TaskMaster
+npm install
+npm start
+```
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 📚 Learning Goal
+This project was built as a hands-on learning exercise in React, exploring different ways to manage state, build reusable components, and handle user interaction in a more advanced and flexible way.
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
