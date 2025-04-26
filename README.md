@@ -41,6 +41,7 @@ The app is composed of **three main versions** inside the `src` folder:
 - **v3.2**: Uses `useReducer` + `useContext` in a separate provider file (`TasksProvider.js`), and exports a custom hook for consuming context
 
 You can switch between versions by editing the `index.js` file and changing the `App` import:
+
 ```js
 // Example: Use version 3.2
 import App from "./App-v3.2";
@@ -115,24 +116,25 @@ This project uses **CI/CD** (Continuous Integration and Continuous Deployment) w
 
 ### GitLab Pipeline Stages:
 
-🔗 [View CI/CD Pipeline on GitLab](https://gitlab.com/saadturky/tasksmaster/-/pipelines/1749581422)
+🔗 [View CI/CD Pipeline on GitLab](https://gitlab.com/saadturky/tasksmaster/-/pipelines/1788007621)
 
-
-1. **Install Browser**: 
+1. **Install Browser**:
    The pipeline installs the Microsoft Edge browser to run tests in a controlled environment.
 
-2. **Deploy to GitLab Pages**: 
+2. **Deploy to GitLab Pages**:
    After the build process, the application is deployed automatically to **GitLab Pages**, making it publicly accessible.
 
 3. **Run Robot Framework Tests**:
    The app runs automated tests using the **Robot Framework** to ensure the functionality works across multiple browsers:
+
    - **Google Chrome**
    - **Mozilla Firefox**
    - **Microsoft Edge**
-   
+
    All tests have passed successfully on these browsers.
 
 ### Notes on CI/CD:
+
 - **GitLab Pages** provides a free hosting platform for static websites. A link to the live deployed application is included in the project description on GitLab, and the app is published there for easy access by anyone.
 - The **Robot Framework** ensures cross-browser compatibility by running the same test suite on Chrome, Firefox, and Edge.
 
